@@ -1,0 +1,10 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/db_example
+    username: springuser
+    password: NewPassword
+    driver-class-name: com.mysql.jdbc.Driver
+#spring.jpa.show-sql: true
