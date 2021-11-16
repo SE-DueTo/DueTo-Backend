@@ -1,8 +1,8 @@
-package com.example.accessingdatamysql;
+package de.dueto.backend.mysqlData;
 
+import de.dueto.backend.model.User;
 import org.springframework.data.repository.CrudRepository;
 
-import com.example.accessingdatamysql.User;
 
 // This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
 // CRUD: Create, Read, Update, Delete
