@@ -1,8 +1,7 @@
 package de.dueto.backend.controller;
 
 import de.dueto.backend.model.User;
-import de.dueto.backend.mysqlData.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import de.dueto.backend.service.MainService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +12,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(path="/")
 public class MainController {
-    @Autowired // get the bean called userRepository
-    private UserRepository userRepository;
+    //@Autowired // get the bean called userRepository
+    private final MainService mainService;
+
+    public MainController(MainService mainService) {
+        this.mainService = mainService;
+    }
+
 
     @PostMapping(path="/add") // Map POST Requests
     public @ResponseBody String addNewUser (@RequestParam String name
@@ -23,15 +27,15 @@ public class MainController {
         // @RequestParam means it is a parameter from the GET or POST request
 
         User n = new User();
-        n.setName(name);
+        n.setUserName(name);
         n.setEmail(email);
-        userRepository.save(n);
+        mainService.saveUser(n);
         return "Saved";
     }
 
     @GetMapping(path="/all")
     public @ResponseBody Iterable<User> getAllUsers() {
         // This returns a JSON or XML with the users
-        return userRepository.findAll();
+        return mainService.getALl();
     }
 }

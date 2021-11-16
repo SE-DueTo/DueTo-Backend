@@ -5,20 +5,20 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-@Table(name = "users")
 @Entity
+@Table(name = "groups")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class User {
+public class Group {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private long id;
-    private String userName;
-    private String email;
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private long groupId;
+    private String groupName;
     private String password;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    private List<Group> groups;
+    private List<User> users;
 
 }
