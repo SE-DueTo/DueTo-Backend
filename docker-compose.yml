@@ -1,0 +1,30 @@
+version: '4.2'
+
+services:
+
+  mysql:
+    image: 'mysql:8.0'
+    restart: always
+    environment:
+      MYSQL_URL : jdbc:mysql://mysql:3306/DueTo-Database?useSSL=false&allowPublicKeyRetrieval=true
+      MYSQL_ROOT_PASSWORD : root
+      MYSQL_DATABASE : DueTo-Database
+      MYSQL_USER : DueTo
+      MYSQL_PASSWORD : password
+    ports:
+      - "3307:3306"
+
+  backend-app:
+    build: .
+    depends_on:
+      - mysql
+    image : 'backend-app'
+    restart : always
+    environment:
+      DB_HOST: mysql:3306
+      DB_USER: DueTo
+      DB_PASSWORD: password
+      DB_NAME: DueTo-Database
+    ports:
+      - "8000:8080"
+
