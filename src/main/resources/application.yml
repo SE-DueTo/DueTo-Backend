@@ -3,8 +3,8 @@ spring:
     hibernate:
       ddl-auto: none
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/db_example
-    username: springuser
-    password: NewPassword
+    url: jdbc:mysql://${MYSQL_HOST}:3306/DueTo-Database
+    username: DueTo
+    password: password
     driver-class-name: com.mysql.jdbc.Driver
 #spring.jpa.show-sql: true
