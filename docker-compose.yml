@@ -12,7 +12,7 @@ services:
       MYSQL_USER : DueTo
       MYSQL_PASSWORD : password
     ports:
-      - "3307:3306"
+      - "3306:3306"
 
   backend-app:
     build: .
