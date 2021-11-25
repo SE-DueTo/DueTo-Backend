@@ -1,6 +1,5 @@
 package de.dueto.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
