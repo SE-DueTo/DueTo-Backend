@@ -1,12 +1,14 @@
 package de.dueto.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashMap;
 
-@Table(name = "transactions")
+@Table(name = "dueto_transactions")
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,14 +17,25 @@ public class Transaction {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
+    @Column(name = "transaction_id")
     private long transactionId;
-    private long groupOrUserId;
+
+    @ManyToOne
+    private Group group;
+
     private long amount;
+
     private String purpose;
+
     private String paymentMethod;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    @ElementCollection
-    private HashMap<User, Long> userAmountList;
-    private long repeating_interval;
+
+    @Type(type = "json")
+    private HashMap<Long, Long> userAmountList;
+
+    @Column(name = "repeating_interval")
+    private long repeatingInterval;
 
 }

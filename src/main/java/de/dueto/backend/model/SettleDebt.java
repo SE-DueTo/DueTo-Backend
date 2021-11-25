@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
 
-@Table(name = "settle_debts")
+@Table(name = "dueto_settle_debts")
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,11 +20,9 @@ public class SettleDebt {
     @Column(nullable = false)
     private long amount;
 
-    @Column(nullable = false)
     @ManyToOne
     private User userWhoId;
 
-    @Column(nullable = false)
     @ManyToOne
     private User userWhomId;
 

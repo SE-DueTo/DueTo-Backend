@@ -2,6 +2,9 @@ package de.dueto.backend.service;
 
 import de.dueto.backend.controller.MainController;
 import de.dueto.backend.model.User;
+import de.dueto.backend.mysqlData.GroupRepository;
+import de.dueto.backend.mysqlData.SettleDebtRepository;
+import de.dueto.backend.mysqlData.TransactionRepository;
 import de.dueto.backend.mysqlData.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
