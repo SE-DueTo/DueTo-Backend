@@ -20,6 +20,7 @@ public class Group {
     @Column(nullable = false)
     private String groupName;
 
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
