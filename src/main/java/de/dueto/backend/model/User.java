@@ -13,10 +13,20 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(nullable = false, unique = true, updatable = false)
     private long id;
+
+    @Column(nullable = false)
     private String userName;
+
+    @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = true)
+    private String avatarUrl;
 
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Group> groups;
