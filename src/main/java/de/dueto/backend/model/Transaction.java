@@ -33,6 +33,7 @@ public class Transaction {
     private Date date;
 
     @Type(type = "json")
+    @Column(columnDefinition = "json")
     private HashMap<Long, Long> userAmountList;
 
     @Column(name = "repeating_interval")
