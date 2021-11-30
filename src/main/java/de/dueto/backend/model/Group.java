@@ -1,5 +1,6 @@
 package de.dueto.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class Group {
     @Column(nullable = false)
     private String groupName;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 
