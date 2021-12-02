@@ -1,9 +1,19 @@
 package de.dueto.backend.controller.v1;
 
+import de.dueto.backend.model.SettleDebt;
+import de.dueto.backend.model.Transaction;
+import de.dueto.backend.model.dashboard.DashboardData;
+import de.dueto.backend.model.user.User;
+import de.dueto.backend.security.Session;
 import de.dueto.backend.service.DashboardService;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller("/v1/dashboard")
+import javax.servlet.http.HttpSession;
+import java.util.List;
+
+@RestController("/v1/dashboard")
 public class DashboardController {
 
     private final DashboardService dashboardService;
@@ -12,4 +22,21 @@ public class DashboardController {
         this.dashboardService = dashboardService;
     }
 
+    @GetMapping("/")
+    public DashboardData getData(HttpSession session) {
+        User user = (User) session.getAttribute(Session.USER_TOKEN);
+        return dashboardService.getData(user);
+    }
+
+    @GetMapping("/transactions")
+    public List<Transaction> transactions(HttpSession session, @RequestBody long from, @RequestBody long limit) {
+        User user = (User) session.getAttribute(Session.USER_TOKEN);
+        return dashboardService.getTransactions(user, from, limit);
+    }
+
+    @GetMapping("/debts")
+    public List<SettleDebt> debts(HttpSession session, @RequestBody long from, @RequestBody long limit) {
+        User user = (User) session.getAttribute(Session.USER_TOKEN);
+        return dashboardService.getDebts(user, from, limit);
+    }
 }

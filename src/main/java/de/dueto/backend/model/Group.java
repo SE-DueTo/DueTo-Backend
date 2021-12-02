@@ -1,6 +1,7 @@
 package de.dueto.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import de.dueto.backend.model.user.User;
 import lombok.*;
 
 import javax.persistence.*;

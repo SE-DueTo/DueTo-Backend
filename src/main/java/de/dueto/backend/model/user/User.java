@@ -1,6 +1,7 @@
-package de.dueto.backend.model;
+package de.dueto.backend.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import de.dueto.backend.model.Group;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Embeddable
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -31,6 +33,7 @@ public class User {
     @Column(name="avatar_url")
     private String avatarUrl;
 
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Group> groups;
 

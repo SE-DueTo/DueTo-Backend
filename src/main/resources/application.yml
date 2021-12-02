@@ -13,3 +13,10 @@ spring:
     username: DueTo
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
+server:
+  servlet:
+    session:
+      timeout: 1d
+      cookie:
+        http-only: true
+        secure: true

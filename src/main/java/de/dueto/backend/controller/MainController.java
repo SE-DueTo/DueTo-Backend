@@ -1,6 +1,6 @@
 package de.dueto.backend.controller;
 
-import de.dueto.backend.model.User;
+import de.dueto.backend.model.user.User;
 import de.dueto.backend.service.MainService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,5 +1,6 @@
 package de.dueto.backend.model;
 
+import de.dueto.backend.model.user.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,10 +22,10 @@ public class SettleDebt {
     private long amount;
 
     @ManyToOne
-    private User userWhoId;
+    private User debtor;
 
     @ManyToOne
-    private User userWhomId;
+    private User creditor;
 
     @Column(nullable = false)
     private String paymentMethod;
