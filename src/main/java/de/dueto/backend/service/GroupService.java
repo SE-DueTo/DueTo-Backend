@@ -1,19 +1,15 @@
 package de.dueto.backend.service;
 
-import de.dueto.backend.model.SettleDebt;
-import de.dueto.backend.model.Transaction;
+import de.dueto.backend.model.settleDebt.SettleDebt;
+import de.dueto.backend.model.transaction.Transaction;
 import de.dueto.backend.model.group.Group;
 import de.dueto.backend.model.group.GroupAddNormalDTO;
 import de.dueto.backend.model.group.GroupAndSumDTO;
 import de.dueto.backend.model.group.GroupMapper;
-import de.dueto.backend.model.settleDebt.SettleDebt;
-import de.dueto.backend.model.transaction.Transaction;
 import de.dueto.backend.model.user.User;
 import de.dueto.backend.mysqlData.GroupRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -87,5 +83,9 @@ public class GroupService {
         if(group.isEmpty()) return false;
         groupRepository.deleteById(groupId);
         return true;
+    }
+
+    public long getGroupById(long groupId) {
+        return groupRepository.getById(groupId).getGroupId();
     }
 }

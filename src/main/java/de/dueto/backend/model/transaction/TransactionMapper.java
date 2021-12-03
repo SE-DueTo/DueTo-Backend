@@ -1,6 +1,5 @@
 package de.dueto.backend.model.transaction;
 
-import de.dueto.backend.model.Group;
 import de.dueto.backend.mysqlData.GroupRepository;
 
 public class TransactionMapper {
@@ -23,6 +22,19 @@ public class TransactionMapper {
                 .date(transactionAddDTO.getDate())
                 .userAmountList(transactionAddDTO.getUserAmountList())
                 .repeatingInterval(transactionAddDTO.getRepeatingInterval().orElse(null))
+                .build();
+    }
+
+    public Transaction fromTransaction(Transaction transaction) {
+
+        return Transaction.builder()
+                .group(groupRepository.findById(transaction.getGroup().getGroupId()).get())
+                .amount(transaction.getAmount())
+                .purpose(transaction.getPurpose())
+                .paymentMethod(transaction.getPaymentMethod())
+                .date(transaction.getDate())
+                .userAmountList(transaction.getUserAmountList())
+                .repeatingInterval(transaction.getRepeatingInterval())
                 .build();
     }
 

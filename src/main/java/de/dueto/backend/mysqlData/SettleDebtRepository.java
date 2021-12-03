@@ -12,6 +12,6 @@ public interface SettleDebtRepository extends JpaRepository<SettleDebt, Long> {
 
     List<SettleDebt> getAllByDebtorEquals(User user);
 
-    List<SettleDebt> getAll
+    List<SettleDebt> getAllByDebtorEqualsAndGroupEquals(User debtor, long group);
 
 }

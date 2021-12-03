@@ -1,6 +1,5 @@
 package de.dueto.backend.controller.v1;
 
-import de.dueto.backend.model.Transaction;
 import de.dueto.backend.model.group.GroupAddNormalDTO;
 import de.dueto.backend.model.group.GroupAndSumDTO;
 import de.dueto.backend.model.transaction.Transaction;

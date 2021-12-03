@@ -37,6 +37,10 @@ public class DashboardService {
         return transactionService.getTransactions(user,groupId, from, limit);
     }
 
+    public List<Transaction> getTransactions(User user, long from, long limit) {
+        return transactionService.getTransactions(user, from, limit);
+    }
+
     public List<SettleDebt> getDebts(User user, long from, long limit) {
         return settleDebtService.getTransactions(user, from, limit);
     }

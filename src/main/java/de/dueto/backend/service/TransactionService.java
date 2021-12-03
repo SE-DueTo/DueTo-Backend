@@ -39,4 +39,7 @@ public class TransactionService {
         return transactionRepository.getAllByUserId(user.getUserId()); //ToDo return users with group id
     }
 
+    public List<Transaction> getTransactions(User user, long from, long limit) {
+        return transactionRepository.getAllByUserId(user.getUserId());
+    }
 }

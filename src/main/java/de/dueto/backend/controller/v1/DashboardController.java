@@ -8,12 +8,14 @@ import de.dueto.backend.security.Session;
 import de.dueto.backend.service.DashboardService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-@RestController("/v1/dashboard")
+@RestController
+@RequestMapping("/v1/dashboard")
 public class DashboardController {
 
     private final DashboardService dashboardService;

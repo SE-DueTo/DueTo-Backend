@@ -33,6 +33,6 @@ public class SettleDebtService {
     }
 
     public List<SettleDebt> getDebts(User user, long groupId) {
-        return //debitor
+        return settleDebtRepository.getAllByDebtorEqualsAndGroupEquals(user, groupId);
     }
 }
