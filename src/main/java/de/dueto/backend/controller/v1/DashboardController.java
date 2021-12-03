@@ -2,7 +2,7 @@ package de.dueto.backend.controller.v1;
 
 import de.dueto.backend.model.SettleDebt;
 import de.dueto.backend.model.Transaction;
-import de.dueto.backend.model.dashboard.DashboardData;
+import de.dueto.backend.model.dashboard.DashboardDataDTO;
 import de.dueto.backend.model.user.User;
 import de.dueto.backend.security.Session;
 import de.dueto.backend.service.DashboardService;
@@ -23,7 +23,7 @@ public class DashboardController {
     }
 
     @GetMapping("/")
-    public DashboardData getData(HttpSession session) {
+    public DashboardDataDTO getData(HttpSession session) {
         User user = (User) session.getAttribute(Session.USER_TOKEN);
         return dashboardService.getData(user);
     }

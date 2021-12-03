@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder
-public class DashboardData {
+public class DashboardDataDTO {
 
     private User user;
     private List<Group> groups;

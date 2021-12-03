@@ -2,7 +2,7 @@ package de.dueto.backend.service;
 
 import de.dueto.backend.model.SettleDebt;
 import de.dueto.backend.model.Transaction;
-import de.dueto.backend.model.dashboard.DashboardData;
+import de.dueto.backend.model.dashboard.DashboardDataDTO;
 import de.dueto.backend.model.user.User;
 import de.dueto.backend.mysqlData.UserRepository;
 import org.springframework.stereotype.Service;
@@ -22,8 +22,8 @@ public class DashboardService {
         this.settleDebtService = settleDebtService;
     }
 
-    public DashboardData getData(User user) {
-        return DashboardData.builder()
+    public DashboardDataDTO getData(User user) {
+        return DashboardDataDTO.builder()
                 .user(user)
                 .groups(user.getGroups())
                 .balance(getBalance(user))
