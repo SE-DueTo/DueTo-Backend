@@ -18,7 +18,7 @@ public class SettleDebt {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(unique = true, nullable = false, updatable = false)
-    private long deptId;
+    private long debtId;
 
     @Column(nullable = false)
     private long amount;
