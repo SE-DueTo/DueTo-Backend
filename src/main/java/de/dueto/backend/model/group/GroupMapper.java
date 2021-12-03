@@ -2,16 +2,17 @@ package de.dueto.backend.model.group;
 
 import de.dueto.backend.model.user.User;
 import de.dueto.backend.mysqlData.UserRepository;
+import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Component
 public class GroupMapper {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public GroupMapper(UserRepository userRepository) {
         this.userRepository = userRepository;
