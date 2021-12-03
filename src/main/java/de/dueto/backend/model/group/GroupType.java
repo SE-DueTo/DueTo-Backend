@@ -1,4 +1,4 @@
-package de.dueto.backend.model;
+package de.dueto.backend.model.group;
 
 public enum GroupType {
     NORMAL, SPONTANEOUS

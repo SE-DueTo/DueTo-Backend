@@ -1,7 +1,7 @@
 package de.dueto.backend.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import de.dueto.backend.model.Group;
+import de.dueto.backend.model.group.Group;
 import lombok.*;
 
 import javax.persistence.*;

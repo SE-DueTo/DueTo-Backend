@@ -1,4 +1,4 @@
-package de.dueto.backend.model;
+package de.dueto.backend.model.group;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.dueto.backend.model.user.User;
@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class Group {
 
     @Id

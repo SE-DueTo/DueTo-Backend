@@ -1,5 +1,6 @@
 package de.dueto.backend.model;
 
+import de.dueto.backend.model.group.Group;
 import lombok.*;
 import org.hibernate.annotations.Type;
 

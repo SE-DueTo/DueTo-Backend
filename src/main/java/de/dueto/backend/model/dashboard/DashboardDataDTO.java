@@ -1,6 +1,6 @@
 package de.dueto.backend.model.dashboard;
 
-import de.dueto.backend.model.Group;
+import de.dueto.backend.model.group.Group;
 import de.dueto.backend.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
