@@ -3,6 +3,7 @@ package de.dueto.backend.controller.v1;
 import de.dueto.backend.model.Transaction;
 import de.dueto.backend.model.group.GroupAddNormalDTO;
 import de.dueto.backend.model.group.GroupAndSumDTO;
+import de.dueto.backend.model.transaction.Transaction;
 import de.dueto.backend.model.user.User;
 import de.dueto.backend.security.Session;
 import de.dueto.backend.service.GroupService;
