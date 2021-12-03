@@ -1,7 +1,9 @@
 package de.dueto.backend.model.transaction;
 
 import de.dueto.backend.mysqlData.GroupRepository;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TransactionMapper {
 
     private final GroupRepository groupRepository;
@@ -25,16 +27,17 @@ public class TransactionMapper {
                 .build();
     }
 
-    public Transaction fromTransaction(Transaction transaction) {
+    public TransactionDTO fromTransaction(Transaction transaction) {
 
-        return Transaction.builder()
-                .group(groupRepository.findById(transaction.getGroup().getGroupId()).get())
+        return TransactionDTO.builder()
+                .transactionId(transaction.getTransactionId())
                 .amount(transaction.getAmount())
-                .purpose(transaction.getPurpose())
-                .paymentMethod(transaction.getPaymentMethod())
                 .date(transaction.getDate())
-                .userAmountList(transaction.getUserAmountList())
+                .groupId(transaction.getGroup().getGroupId())
+                .paymentMethod(transaction.getPaymentMethod())
+                .purpose(transaction.getPurpose())
                 .repeatingInterval(transaction.getRepeatingInterval())
+                .userAmountList(transaction.getUserAmountList())
                 .build();
     }
 

@@ -7,10 +7,7 @@ import de.dueto.backend.model.user.User;
 import de.dueto.backend.security.Session;
 import de.dueto.backend.service.DashboardService;
 import de.dueto.backend.service.TransactionService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -24,5 +21,9 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
+    @PostMapping("add")
+    public boolean addTransaction(@RequestBody TransactionAddDTO transactionAddDTO) {
+        return transactionService.addTransaction(transactionAddDTO);
+    }
 
 }

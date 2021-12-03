@@ -31,8 +31,8 @@ public class GroupController {
     public List<Transaction> getTransactions(
             HttpSession session,
             @PathVariable long groupId,
-            @RequestParam long from,
-            @RequestParam int limit) {
+            @RequestBody long from,
+            @RequestBody int limit) {
         User user = (User) session.getAttribute(Session.USER_TOKEN);
         return groupService.getTransactions(user, groupId, from, limit);
     }
@@ -41,8 +41,8 @@ public class GroupController {
     public List<Transaction> getDebts(
             HttpSession session,
             @PathVariable long groupId,
-            @RequestParam long from,
-            @RequestParam int limit) {
+            @RequestBody long from,
+            @RequestBody int limit) {
         User user = (User) session.getAttribute(Session.USER_TOKEN);
         return groupService.getTransactions(user, groupId, from, limit);
     }
