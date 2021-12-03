@@ -1,7 +1,7 @@
 package de.dueto.backend.controller.v1;
 
-import de.dueto.backend.model.SettleDebt;
-import de.dueto.backend.model.Transaction;
+import de.dueto.backend.model.settleDebt.SettleDebt;
+import de.dueto.backend.model.transaction.Transaction;
 import de.dueto.backend.model.dashboard.DashboardDataDTO;
 import de.dueto.backend.model.user.User;
 import de.dueto.backend.security.Session;

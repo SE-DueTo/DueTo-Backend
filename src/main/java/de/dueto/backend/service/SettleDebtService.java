@@ -1,6 +1,6 @@
 package de.dueto.backend.service;
 
-import de.dueto.backend.model.SettleDebt;
+import de.dueto.backend.model.settleDebt.SettleDebt;
 import de.dueto.backend.model.user.User;
 import de.dueto.backend.mysqlData.SettleDebtRepository;
 import org.springframework.stereotype.Service;
@@ -30,5 +30,9 @@ public class SettleDebtService {
                 .skip(from)
                 .limit(limit)
                 .collect(Collectors.toList());
+    }
+
+    public List<SettleDebt> getDebts(User user, long groupId) {
+        return //debitor
     }
 }

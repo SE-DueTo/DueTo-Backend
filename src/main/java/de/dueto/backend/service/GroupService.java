@@ -6,6 +6,8 @@ import de.dueto.backend.model.group.Group;
 import de.dueto.backend.model.group.GroupAddNormalDTO;
 import de.dueto.backend.model.group.GroupAndSumDTO;
 import de.dueto.backend.model.group.GroupMapper;
+import de.dueto.backend.model.settleDebt.SettleDebt;
+import de.dueto.backend.model.transaction.Transaction;
 import de.dueto.backend.model.user.User;
 import de.dueto.backend.mysqlData.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +66,7 @@ public class GroupService {
         return transactionService.getTransactions(user, groupId);
     }
 
-    public List<Transaction> getTransactions(User user, long groupId, long from, int limit) {
+    public List<Transaction> getTransactions(User user, long groupId, long from, long limit) {
         return transactionService.getTransactions(user, groupId, from, limit);
     }
 
