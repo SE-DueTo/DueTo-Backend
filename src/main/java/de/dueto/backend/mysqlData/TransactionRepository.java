@@ -11,7 +11,7 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
     @Query(
-            value = "SELECT * FROM dueto_settle_debts WHERE user_amount_list  -> '$.?1' IS NOT NULL",
+            value = "SELECT * FROM dueto_transactions WHERE user_amount_list  -> '$.?1' IS NOT NULL",
             nativeQuery = true
     )
     List<Transaction> getAllByUserId(Long userId);

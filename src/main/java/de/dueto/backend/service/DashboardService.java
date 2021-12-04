@@ -3,21 +3,25 @@ package de.dueto.backend.service;
 import de.dueto.backend.model.settleDebt.SettleDebt;
 import de.dueto.backend.model.transaction.Transaction;
 import de.dueto.backend.model.dashboard.DashboardDataDTO;
+import de.dueto.backend.model.transaction.TransactionDTO;
+import de.dueto.backend.model.transaction.TransactionMapper;
 import de.dueto.backend.model.user.User;
 import de.dueto.backend.mysqlData.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DashboardService {
 
-    private final UserRepository userRepository;
     private final TransactionService transactionService;
     private final SettleDebtService settleDebtService;
 
-    public DashboardService(UserRepository userRepository, TransactionService transactionService, SettleDebtService settleDebtService) {
-        this.userRepository = userRepository;
+
+    public DashboardService(
+            TransactionService transactionService,
+            SettleDebtService settleDebtService) {
         this.transactionService = transactionService;
         this.settleDebtService = settleDebtService;
     }

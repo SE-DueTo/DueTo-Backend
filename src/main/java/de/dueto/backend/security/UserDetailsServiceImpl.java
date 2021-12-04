@@ -19,13 +19,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     public UserRepository userRepository;
 
-    private final Logger logger = LoggerFactory.getLogger("details");
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        logger.debug(username);
         User user = userRepository.findUserByUsername(username);
-        logger.debug(Objects.toString(user));
         if(user == null) throw new UsernameNotFoundException("User not found (" + username + ")");
 
         return new org.springframework.security.core.userdetails.User(

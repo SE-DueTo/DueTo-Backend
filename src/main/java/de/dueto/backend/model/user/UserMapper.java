@@ -1,5 +1,6 @@
 package de.dueto.backend.model.user;
 
+
 import java.util.ArrayList;
 
 public class UserMapper {

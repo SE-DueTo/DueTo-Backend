@@ -2,66 +2,76 @@ package de.dueto.backend.controller.v1;
 
 import de.dueto.backend.model.group.GroupAddNormalDTO;
 import de.dueto.backend.model.group.GroupAndSumDTO;
-import de.dueto.backend.model.transaction.Transaction;
-import de.dueto.backend.model.user.User;
-import de.dueto.backend.security.Session;
+import de.dueto.backend.model.transaction.TransactionDTO;
+import de.dueto.backend.model.transaction.TransactionMapper;
 import de.dueto.backend.service.GroupService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/v1/group")
 public class GroupController {
 
     private final GroupService groupService;
+    private final AuthorizationMapper authorizationMapper;
+    private final TransactionMapper transactionMapper;
 
-    public GroupController(GroupService groupService) {
+
+    public GroupController(GroupService groupService, AuthorizationMapper authorizationMapper, TransactionMapper transactionMapper) {
         this.groupService = groupService;
+        this.authorizationMapper = authorizationMapper;
+        this.transactionMapper = transactionMapper;
     }
 
     @GetMapping("{groupId}")
-    public GroupAndSumDTO getGroupInfo(HttpSession session, @PathVariable long groupId) {
-        User user = (User) session.getAttribute(Session.USER_TOKEN);
-        return groupService.getGroupInfo(user, groupId);
+    public GroupAndSumDTO getGroupInfo(
+            @RequestHeader(value="Authorization") String token,
+            @PathVariable long groupId) {
+        return groupService.getGroupInfo(authorizationMapper.getUser(token), groupId);
     }
 
     @GetMapping("{groupId}/transactions")
-    public List<Transaction> getTransactions(
-            HttpSession session,
+    public List<TransactionDTO> getTransactions(
+            @RequestHeader(value="Authorization") String token,
             @PathVariable long groupId,
             @RequestBody long from,
             @RequestBody int limit) {
-        User user = (User) session.getAttribute(Session.USER_TOKEN);
-        return groupService.getTransactions(user, groupId, from, limit);
+        return groupService.getTransactions(authorizationMapper.getUser(token), groupId, from, limit)
+                .stream()
+                .map(transactionMapper::fromTransaction)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("{groupId}/debts")
-    public List<Transaction> getDebts(
-            HttpSession session,
+    public List<TransactionDTO> getDebts(
+            @RequestHeader(value="Authorization") String token,
             @PathVariable long groupId,
             @RequestBody long from,
             @RequestBody int limit) {
-        User user = (User) session.getAttribute(Session.USER_TOKEN);
-        return groupService.getTransactions(user, groupId, from, limit);
+        return groupService.getTransactions(authorizationMapper.getUser(token), groupId, from, limit)
+                .stream()
+                .map(transactionMapper::fromTransaction)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("normal/add")
-    public long addNormalGroup(HttpSession session, @RequestBody GroupAddNormalDTO groupAddNormalDTO) {
-        User user = (User) session.getAttribute(Session.USER_TOKEN);
-        return groupService.addNormalGroup(user, groupAddNormalDTO);
+    public long addNormalGroup(
+            @RequestHeader(value="Authorization") String token,
+            @RequestBody GroupAddNormalDTO groupAddNormalDTO) {
+        return groupService.addNormalGroup(authorizationMapper.getUser(token), groupAddNormalDTO);
     }
 
     @GetMapping("normal/remove/{groupId}")
-    public boolean removeSpontaneousGroup(HttpSession session, @PathVariable long groupId) {
-        User user = (User) session.getAttribute(Session.USER_TOKEN);
+    public boolean removeSpontaneousGroup(@PathVariable long groupId) {
         return groupService.removeNormalGroup(groupId);
     }
 
     @GetMapping("spontaneous/add")
-    public long addSpontaneousGroup(HttpSession session, @RequestBody long userId) {
-        User user = (User) session.getAttribute(Session.USER_TOKEN);
-        return groupService.addSpontaneousGroup(user, userId);
+    public long addSpontaneousGroup(
+            @RequestHeader(value="Authorization") String token,
+            @RequestBody long userId) {
+        return groupService.addSpontaneousGroup(authorizationMapper.getUser(token), userId);
     }
 }

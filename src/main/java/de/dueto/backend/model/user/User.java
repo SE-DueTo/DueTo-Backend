@@ -5,6 +5,7 @@ import de.dueto.backend.model.group.Group;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Table(name = "dueto_users")
@@ -14,7 +15,7 @@ import java.util.List;
 @Data
 @Embeddable
 @Builder
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(nullable = false, unique = true, updatable = false, name = "user_id")
@@ -34,7 +35,7 @@ public class User {
     private String avatarUrl;
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Group> groups;
 
 }
