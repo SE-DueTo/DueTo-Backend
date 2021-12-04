@@ -1,6 +1,9 @@
 package de.dueto.backend.service;
 
 import de.dueto.backend.model.settleDebt.SettleDebt;
+import de.dueto.backend.model.settleDebt.SettleDebtAddDTO;
+import de.dueto.backend.model.settleDebt.SettleDebtDTO;
+import de.dueto.backend.model.settleDebt.SettleDebtMapper;
 import de.dueto.backend.model.user.User;
 import de.dueto.backend.mysqlData.SettleDebtRepository;
 import org.springframework.stereotype.Service;
@@ -12,9 +15,11 @@ import java.util.stream.Collectors;
 public class SettleDebtService {
 
     private final SettleDebtRepository settleDebtRepository;
+    private final SettleDebtMapper settleDebtMapper;
 
-    public SettleDebtService(SettleDebtRepository settleDebtRepository) {
+    public SettleDebtService(SettleDebtRepository settleDebtRepository, SettleDebtMapper settleDebtMapper) {
         this.settleDebtRepository = settleDebtRepository;
+        this.settleDebtMapper = settleDebtMapper;
     }
 
     public long getBalance(User user) {
@@ -34,5 +39,12 @@ public class SettleDebtService {
 
     public List<SettleDebt> getDebts(User user, long groupId) {
         return settleDebtRepository.getAllByDebtorEqualsAndGroupEquals(user, groupId);
+    }
+
+    public boolean addSettleDebt(SettleDebtAddDTO settleDebtAddDTO) {
+        SettleDebt settleDebt = settleDebtMapper.fromSettleDebtAddDTO(settleDebtAddDTO);
+        if(settleDebt==null) return false;
+        settleDebtRepository.save(settleDebt);
+        return true;
     }
 }

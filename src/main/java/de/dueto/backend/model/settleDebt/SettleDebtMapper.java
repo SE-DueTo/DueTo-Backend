@@ -2,7 +2,9 @@ package de.dueto.backend.model.settleDebt;
 
 import de.dueto.backend.mysqlData.GroupRepository;
 import de.dueto.backend.mysqlData.UserRepository;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class SettleDebtMapper {
 
     private final GroupRepository groupRepository;
@@ -24,6 +26,21 @@ public class SettleDebtMapper {
                 .debtor(userRepository.findById(settleDebtAddDTO.getDebtorId()).get())
                 .paymentMethod(settleDebtAddDTO.getPaymentMethod())
                 .date(settleDebtAddDTO.getDate())
+                .build();
+    }
+
+    public SettleDebtDTO fromSettleDebt(SettleDebt settleDebt) {
+
+        return SettleDebtDTO.builder()
+                .debtId(settleDebt.getDebtId())
+                .amount(settleDebt.getAmount())
+                .groupId(settleDebt.getGroup().getGroupId())
+                .debtor(settleDebt.getDebtor())
+                .debtorId(settleDebt.getDebtorId())
+                .creditor(settleDebt.getCreditor())
+                .creditorId(settleDebt.getCreditorId())
+                .paymentMethod(settleDebt.getPaymentMethod())
+                .date(settleDebt.getDate())
                 .build();
     }
 
