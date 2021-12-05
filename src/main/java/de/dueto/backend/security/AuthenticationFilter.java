@@ -5,6 +5,7 @@ import de.dueto.backend.model.user.SimpleUserDTO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.hibernate.annotations.Filter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -29,6 +30,9 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     private final AuthenticationManager authenticationManager;
+
+    @Value("${secrets.JWT_SECRET}")
+    private String jwtSecret;
 
     public AuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
@@ -55,10 +59,13 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
             HttpServletResponse response,
             FilterChain filterChain,
             Authentication authentication) {
+
+
+
         String token = Jwts.builder()
             .setSubject(((User) authentication.getPrincipal()).getUsername())
             .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
-            .signWith(SignatureAlgorithm.HS512, Secrets.jwtSecret.getBytes())
+            .signWith(SignatureAlgorithm.HS512, jwtSecret.getBytes())
             .compact();
         response.addHeader("Authorization","Bearer " + token);
     }

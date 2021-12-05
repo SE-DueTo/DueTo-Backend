@@ -1,0 +1,32 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: true
+    show-sql: false
+
+  datasource:
+    url: ${DATABASE-JDBC-URL}
+    username: ${DATABASE-LOGIN-USERNAME}
+    password: ${DATABASE-LOGIN-PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
+      table-name: SPRING_SESSION
+server:
+  servlet:
+    session:
+      timeout: 1d
+      cookie:
+        http-only: true
+        secure: true
+secrets:
+  JWT_SECRET: ${JWT-SECRET}

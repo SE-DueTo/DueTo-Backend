@@ -2,6 +2,7 @@ package de.dueto.backend.security;
 
 import io.jsonwebtoken.Jwts;
 import org.hibernate.annotations.Filter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +22,9 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
         super(authenticationManager);
     }
 
+    @Value("${secrets.JWT_SECRET}")
+    private String jwtSecret;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         String header = request.getHeader("Authorization");
@@ -37,7 +41,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         if(token != null) {
-            String user = Jwts.parser().setSigningKey(Secrets.jwtSecret.getBytes())
+            String user = Jwts.parser().setSigningKey(jwtSecret.getBytes())
                 .parseClaimsJws(token.replace("Bearer",""))
                 .getBody()
                 .getSubject();
