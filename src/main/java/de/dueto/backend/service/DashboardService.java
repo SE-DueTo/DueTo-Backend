@@ -1,16 +1,12 @@
 package de.dueto.backend.service;
 
-import de.dueto.backend.model.settleDebt.SettleDebt;
+import de.dueto.backend.model.settle_debt.SettleDebt;
 import de.dueto.backend.model.transaction.Transaction;
 import de.dueto.backend.model.dashboard.DashboardDataDTO;
-import de.dueto.backend.model.transaction.TransactionDTO;
-import de.dueto.backend.model.transaction.TransactionMapper;
 import de.dueto.backend.model.user.User;
-import de.dueto.backend.mysqlData.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class DashboardService {

@@ -1,7 +1,7 @@
 package de.dueto.backend.model.group;
 
 import de.dueto.backend.model.user.User;
-import de.dueto.backend.mysqlData.UserRepository;
+import de.dueto.backend.mysql_data.UserRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public class GroupMapper {
         if(user2.isEmpty()) return null;
         return Group.builder()
                 .groupName("n/a")
-                .users(List.of(user2.get()))
+                .users(List.of(user, user2.get()))
                 .password(null)
                 .groupType(GroupType.SPONTANEOUS)
                 .build();

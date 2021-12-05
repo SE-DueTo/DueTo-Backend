@@ -3,7 +3,6 @@ package de.dueto.backend.security;
 import de.dueto.backend.model.user.RegistrationUserDTO;
 import de.dueto.backend.model.user.SimpleUserDTO;
 import de.dueto.backend.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -11,8 +10,12 @@ import org.springframework.validation.Validator;
 
 @Component
 public class UserValidator implements Validator {
-    @Autowired
-    private UserService userService;
+
+    private final UserService userService;
+
+    public UserValidator(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -23,12 +26,14 @@ public class UserValidator implements Validator {
     public void validate(Object o, Errors errors) {
         RegistrationUserDTO user = (RegistrationUserDTO) o;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
+        String usernameField = "username";
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, usernameField, "NotEmpty");
         if (user.getUsername().length() < 2 || user.getUsername().length() > 32) {
-            errors.rejectValue("username", "Size.userForm.username");
+            errors.rejectValue(usernameField, "Size.userForm.username");
         }
         if (userService.findByUsername(user.getUsername()) != null) {
-            errors.rejectValue("username", "Duplicate.userForm.username");
+            errors.rejectValue(usernameField, "Duplicate.userForm.username");
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");

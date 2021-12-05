@@ -1,6 +1,6 @@
 package de.dueto.backend.model.transaction;
 
-import de.dueto.backend.mysqlData.GroupRepository;
+import de.dueto.backend.mysql_data.GroupRepository;
 import org.springframework.stereotype.Component;
 
 @Component

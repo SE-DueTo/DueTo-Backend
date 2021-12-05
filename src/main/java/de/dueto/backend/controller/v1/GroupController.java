@@ -58,9 +58,8 @@ public class GroupController {
 
     @GetMapping("normal/add")
     public long addNormalGroup(
-            @RequestHeader(value="Authorization") String token,
             @RequestBody GroupAddNormalDTO groupAddNormalDTO) {
-        return groupService.addNormalGroup(authorizationMapper.getUser(token), groupAddNormalDTO);
+        return groupService.addNormalGroup(groupAddNormalDTO);
     }
 
     @GetMapping("normal/remove/{groupId}")

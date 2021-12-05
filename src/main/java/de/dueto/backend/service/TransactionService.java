@@ -4,8 +4,7 @@ import de.dueto.backend.model.transaction.Transaction;
 import de.dueto.backend.model.transaction.TransactionAddDTO;
 import de.dueto.backend.model.transaction.TransactionMapper;
 import de.dueto.backend.model.user.User;
-import de.dueto.backend.mysqlData.TransactionRepository;
-import de.dueto.backend.mysqlData.UserRepository;
+import de.dueto.backend.mysql_data.TransactionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,12 +14,10 @@ import java.util.stream.Collectors;
 public class TransactionService {
 
     private final TransactionRepository transactionRepository;
-    private final UserRepository userRepository;
     private final TransactionMapper transactionMapper;
 
-    public TransactionService(TransactionRepository transactionRepository, UserRepository userRepository, TransactionMapper transactionMapper) {
+    public TransactionService(TransactionRepository transactionRepository, TransactionMapper transactionMapper) {
         this.transactionRepository = transactionRepository;
-        this.userRepository = userRepository;
         this.transactionMapper = transactionMapper;
     }
 
@@ -44,7 +41,11 @@ public class TransactionService {
     }
 
     public List<Transaction> getTransactions(User user, long from, long limit) {
-        return transactionRepository.getAllByUserId(user.getUserId());
+        return transactionRepository.getAllByUserId(user.getUserId())
+                .stream()
+                .skip(from)
+                .limit(limit)
+                .collect(Collectors.toList());
     }
 
     public boolean addTransaction(TransactionAddDTO transactionAddDTO) {

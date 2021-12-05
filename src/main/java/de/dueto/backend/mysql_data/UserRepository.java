@@ -1,4 +1,4 @@
-package de.dueto.backend.mysqlData;
+package de.dueto.backend.mysql_data;
 
 import de.dueto.backend.model.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;

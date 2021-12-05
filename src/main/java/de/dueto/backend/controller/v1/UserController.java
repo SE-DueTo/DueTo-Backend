@@ -2,7 +2,6 @@ package de.dueto.backend.controller.v1;
 
 import de.dueto.backend.model.registration.RegistrationResponseDTO;
 import de.dueto.backend.model.user.RegistrationUserDTO;
-import de.dueto.backend.model.user.SimpleUserDTO;
 import de.dueto.backend.model.user.User;
 import de.dueto.backend.model.user.UserMapper;
 import de.dueto.backend.security.Session;
@@ -48,25 +47,6 @@ public class UserController {
         return RegistrationResponseDTO.builder()
                 .successful(true)
                 .build();
-    }
-
-    @PostMapping("/login")
-    public String login(HttpSession session, @RequestBody SimpleUserDTO userDTO, BCryptPasswordEncoder passwordEncoder) {
-
-        User user = userService.findByUsername(userDTO.getUsername());
-
-        System.out.println(user);
-
-        if(user == null) return null;
-
-        System.out.println(user);
-        System.out.println(passwordEncoder.matches(userDTO.getPassword(), user.getPassword()));
-
-        if(!passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) return null;
-
-        session.setAttribute(Session.USER_TOKEN, user);
-
-        return session.getId();
     }
 
     @PostMapping("/logout")

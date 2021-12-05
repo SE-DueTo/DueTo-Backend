@@ -1,6 +1,6 @@
 package de.dueto.backend.controller.v1;
 
-import de.dueto.backend.model.settleDebt.SettleDebt;
+import de.dueto.backend.model.settle_debt.SettleDebt;
 import de.dueto.backend.model.dashboard.DashboardDataDTO;
 import de.dueto.backend.model.transaction.TransactionDTO;
 import de.dueto.backend.model.transaction.TransactionMapper;

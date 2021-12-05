@@ -1,7 +1,7 @@
 package de.dueto.backend.service;
 
 import de.dueto.backend.model.user.User;
-import de.dueto.backend.mysqlData.UserRepository;
+import de.dueto.backend.mysql_data.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service

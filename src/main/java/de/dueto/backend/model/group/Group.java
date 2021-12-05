@@ -5,6 +5,7 @@ import de.dueto.backend.model.user.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -13,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
-public class Group {
+public class Group implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

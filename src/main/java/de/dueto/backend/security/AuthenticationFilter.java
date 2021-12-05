@@ -22,6 +22,12 @@ import java.util.Date;
 @Filter(name = "AuthenticationFilter")
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+    static class AuthenticationAttemptException extends AuthenticationException {
+        public AuthenticationAttemptException(String msg) {
+            super(msg);
+        }
+    }
+
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationFilter(AuthenticationManager authenticationManager) {
@@ -39,9 +45,11 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                     new UsernamePasswordAuthenticationToken(creds.getUsername(), creds.getPassword(),new ArrayList<>())
             );
         } catch(IOException e) {
-            throw new RuntimeException("Could not read request" + e);
+            throw new AuthenticationAttemptException("Could not read request" + e);
         }
     }
+
+    @Override
     protected void successfulAuthentication(
             HttpServletRequest request,
             HttpServletResponse response,

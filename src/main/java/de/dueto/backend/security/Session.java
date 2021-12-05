@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 public class Session {
 
-    public final static String USER_TOKEN = "user_token";
-    public final static String USERNAME = "PRINCIPAL_NAME";
+    public static final String USER_TOKEN = "user_token";
+    public static final String USERNAME = "PRINCIPAL_NAME";
 
     private User user;
 

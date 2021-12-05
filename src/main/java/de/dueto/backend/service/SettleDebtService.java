@@ -1,11 +1,10 @@
 package de.dueto.backend.service;
 
-import de.dueto.backend.model.settleDebt.SettleDebt;
-import de.dueto.backend.model.settleDebt.SettleDebtAddDTO;
-import de.dueto.backend.model.settleDebt.SettleDebtDTO;
-import de.dueto.backend.model.settleDebt.SettleDebtMapper;
+import de.dueto.backend.model.settle_debt.SettleDebt;
+import de.dueto.backend.model.settle_debt.SettleDebtAddDTO;
+import de.dueto.backend.model.settle_debt.SettleDebtMapper;
 import de.dueto.backend.model.user.User;
-import de.dueto.backend.mysqlData.SettleDebtRepository;
+import de.dueto.backend.mysql_data.SettleDebtRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

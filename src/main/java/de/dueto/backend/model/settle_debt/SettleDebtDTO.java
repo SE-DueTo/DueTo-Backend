@@ -1,4 +1,4 @@
-package de.dueto.backend.model.settleDebt;
+package de.dueto.backend.model.settle_debt;
 
 import de.dueto.backend.model.user.User;
 import lombok.AllArgsConstructor;

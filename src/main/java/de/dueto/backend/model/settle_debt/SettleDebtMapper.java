@@ -1,7 +1,7 @@
-package de.dueto.backend.model.settleDebt;
+package de.dueto.backend.model.settle_debt;
 
-import de.dueto.backend.mysqlData.GroupRepository;
-import de.dueto.backend.mysqlData.UserRepository;
+import de.dueto.backend.mysql_data.GroupRepository;
+import de.dueto.backend.mysql_data.UserRepository;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration

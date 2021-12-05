@@ -21,8 +21,8 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
         super(authenticationManager);
     }
 
+    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        logger.debug("filter");
         String header = request.getHeader("Authorization");
         if(header == null || !header.startsWith("Bearer")) {
             filterChain.doFilter(request,response);
@@ -35,7 +35,6 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        logger.debug("usernamepass auth");
         String token = request.getHeader("Authorization");
         if(token != null) {
             String user = Jwts.parser().setSigningKey(Secrets.jwtSecret.getBytes())
