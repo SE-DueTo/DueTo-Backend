@@ -1,5 +1,6 @@
-package de.dueto.backend.model;
+package de.dueto.backend.model.transaction;
 
+import de.dueto.backend.model.group.Group;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
@@ -12,6 +13,7 @@ import java.util.HashMap;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class Transaction {
 
     @Id
@@ -36,6 +38,6 @@ public class Transaction {
     private HashMap<Long, Long> userAmountList;
 
     @Column(name = "repeating_interval")
-    private long repeatingInterval;
+    private Long repeatingInterval;
 
 }

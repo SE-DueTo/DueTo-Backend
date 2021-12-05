@@ -1,8 +1,11 @@
-package de.dueto.backend.model;
+package de.dueto.backend.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import de.dueto.backend.model.group.Group;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Table(name = "dueto_users")
@@ -11,7 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Embeddable
-public class User {
+@Builder
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(nullable = false, unique = true, updatable = false, name = "user_id")
@@ -23,13 +27,15 @@ public class User {
     @Column(nullable = false)
     private String email;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 
     @Column(name="avatar_url")
     private String avatarUrl;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Group> groups;
 
 }

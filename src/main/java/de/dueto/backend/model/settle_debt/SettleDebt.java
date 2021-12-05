@@ -1,5 +1,7 @@
-package de.dueto.backend.model;
+package de.dueto.backend.model.settle_debt;
 
+import de.dueto.backend.model.group.Group;
+import de.dueto.backend.model.user.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,21 +12,27 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class SettleDebt {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(unique = true, nullable = false, updatable = false)
-    private long deptId;
+    private long debtId;
 
     @Column(nullable = false)
     private long amount;
 
     @ManyToOne
-    private User userWhoId;
+    private Group group;
 
     @ManyToOne
-    private User userWhomId;
+    private User debtor;
+    private long debtorId;
+
+    @ManyToOne
+    private User creditor;
+    private long creditorId;
 
     @Column(nullable = false)
     private String paymentMethod;

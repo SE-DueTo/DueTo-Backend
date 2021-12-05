@@ -1,8 +1,11 @@
-package de.dueto.backend.model;
+package de.dueto.backend.model.group;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import de.dueto.backend.model.user.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -10,7 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Group {
+@Builder
+public class Group implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -20,6 +24,7 @@ public class Group {
     @Column(nullable = false)
     private String groupName;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 

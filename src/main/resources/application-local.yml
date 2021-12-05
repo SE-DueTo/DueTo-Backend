@@ -13,3 +13,20 @@ spring:
     username: DueTo
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
+      table-name: SPRING_SESSION
+server:
+  servlet:
+    session:
+      timeout: 1d
+      cookie:
+        http-only: true
+        secure: true
+secrets:
+  jwt-secret: SecretKeyToGenJWTs
