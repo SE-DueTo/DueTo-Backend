@@ -156,5 +156,6 @@
     <orderEntry type="library" name="Maven: org.springframework.session:spring-session-jdbc:2.6.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.session:spring-session-core:2.6.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:5.3.13" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-configuration-processor:2.6.0" level="project" />
   </component>
 </module>

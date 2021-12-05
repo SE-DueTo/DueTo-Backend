@@ -31,7 +31,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
 
-    @Value("${secrets.JWT_SECRET}")
+    @Value("${secrets.jwt-secret}")
     private String jwtSecret;
 
     public AuthenticationFilter(AuthenticationManager authenticationManager) {

@@ -22,7 +22,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
         super(authenticationManager);
     }
 
-    @Value("${secrets.JWT_SECRET}")
+    @Value("${secrets.jwt-secret}")
     private String jwtSecret;
 
     @Override
