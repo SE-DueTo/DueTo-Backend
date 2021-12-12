@@ -9,9 +9,9 @@ spring:
     show-sql: false
 
   datasource:
-    url: ${DATABASE-JDBC-URL}
-    username: ${DATABASE-LOGIN-USERNAME}
-    password: ${DATABASE-LOGIN-PASSWORD}
+    url: ${DATABASE_JDBC_URL}
+    username: ${DATABASE_LOGIN_USERNAME}
+    password: ${DATABASE_LOGIN_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   mvc:
     pathmatch:
@@ -29,4 +29,4 @@ server:
         http-only: true
         secure: true
 secrets:
-  jwt-secret: ${JWT-SECRET}
+  jwt-secret: ${JWT_SECRET}
