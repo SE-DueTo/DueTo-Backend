@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Optional;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,6 +26,6 @@ public class TransactionAddDTO {
 
     private HashMap<Long, Long> userAmountList;
 
-    private Optional<Long> repeatingInterval;
+    private Long repeatingInterval;
 
 }
