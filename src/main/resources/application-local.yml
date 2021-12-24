@@ -28,5 +28,3 @@ server:
       cookie:
         http-only: true
         secure: true
-secrets:
-  jwt-secret: SecretKeyToGenJWTs
