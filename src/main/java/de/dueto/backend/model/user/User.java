@@ -35,7 +35,7 @@ public class User implements Serializable {
     private String avatarUrl;
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "users")
     private List<Group> groups;
 
 }
