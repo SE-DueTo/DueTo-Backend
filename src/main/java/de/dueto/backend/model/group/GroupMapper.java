@@ -32,6 +32,7 @@ public class GroupMapper {
     }
 
     public Group fromGroupAddSpontaneous(User user, long userId) {
+        if(user==null) return null;
         Optional<User> user2 = userRepository.findById(userId);
         if(user2.isEmpty()) return null;
         return Group.builder()

@@ -25,7 +25,7 @@ public class Group implements Serializable {
     private String groupName;
 
     @JsonIgnore
-    @Column(nullable = false)
+    @Column
     private String password;
 
     @Enumerated(EnumType.STRING)
