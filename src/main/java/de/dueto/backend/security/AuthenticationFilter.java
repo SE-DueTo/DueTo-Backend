@@ -2,10 +2,10 @@ package de.dueto.backend.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.dueto.backend.model.user.SimpleUserDTO;
+import de.dueto.backend.security.secret.JwtSecret;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.hibernate.annotations.Filter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,11 +31,11 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
 
-    @Value("${secrets.jwt-secret}")
-    private String jwtSecret;
+    private final String jwtSecret;
 
-    public AuthenticationFilter(AuthenticationManager authenticationManager) {
+    public AuthenticationFilter(AuthenticationManager authenticationManager, JwtSecret jwtSecret) {
         this.authenticationManager = authenticationManager;
+        this.jwtSecret = jwtSecret.getJtwSecret();
         setFilterProcessesUrl("/login");
     }
 

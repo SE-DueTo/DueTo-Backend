@@ -1,5 +1,6 @@
 package de.dueto.backend.security;
 
+import de.dueto.backend.security.secret.JwtSecret;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -21,10 +22,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserDetailsService userDetailsService;
+    private final JwtSecret jwtSecret;
 
-    public WebSecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailsService) {
+    public WebSecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailsService, JwtSecret jwtSecret) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userDetailsService = userDetailsService;
+        this.jwtSecret = jwtSecret;
     }
 
     @Override
@@ -38,8 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.POST, "/**/register").permitAll()
                     .anyRequest().authenticated()
                 .and()
-                .addFilter(new AuthenticationFilter(authenticationManager()))
-                .addFilter(new AuthorizationFilter(authenticationManager()))
+                .addFilter(new AuthenticationFilter(authenticationManager(), jwtSecret))
+                .addFilter(new AuthorizationFilter(authenticationManager(), jwtSecret))
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.NEVER)
                     .maximumSessions(20);

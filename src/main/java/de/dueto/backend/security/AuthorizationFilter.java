@@ -1,8 +1,8 @@
 package de.dueto.backend.security;
 
+import de.dueto.backend.security.secret.JwtSecret;
 import io.jsonwebtoken.Jwts;
 import org.hibernate.annotations.Filter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,12 +18,12 @@ import java.util.ArrayList;
 @Filter(name = "AuthorizationFilter")
 public class AuthorizationFilter extends BasicAuthenticationFilter {
 
-    public AuthorizationFilter(AuthenticationManager authenticationManager) {
+    public AuthorizationFilter(AuthenticationManager authenticationManager, JwtSecret jwtSecret) {
         super(authenticationManager);
+        this.jwtSecret = jwtSecret.getJtwSecret();
     }
 
-    @Value("${secrets.jwt-secret}")
-    private String jwtSecret;
+    private final String jwtSecret;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
