@@ -1,7 +1,7 @@
 package de.dueto.backend.security;
 
-import de.dueto.backend.security.secret.JwtSecret;
-import io.jsonwebtoken.Jwts;
+import de.dueto.backend.model.user.User;
+import de.dueto.backend.service.SessionService;
 import org.hibernate.annotations.Filter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,12 +18,12 @@ import java.util.ArrayList;
 @Filter(name = "AuthorizationFilter")
 public class AuthorizationFilter extends BasicAuthenticationFilter {
 
-    public AuthorizationFilter(AuthenticationManager authenticationManager, JwtSecret jwtSecret) {
+    public AuthorizationFilter(AuthenticationManager authenticationManager, SessionService sessionService) {
         super(authenticationManager);
-        this.jwtSecret = jwtSecret.getJtwSecret();
+        this.sessionService = sessionService;
     }
 
-    private final String jwtSecret;
+    private final SessionService sessionService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
@@ -40,16 +40,12 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
-        if(token != null) {
-            String user = Jwts.parser().setSigningKey(jwtSecret.getBytes())
-                .parseClaimsJws(token.replace("Bearer",""))
-                .getBody()
-                .getSubject();
-            if(user != null) {
-                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
-            }
-            return null;
-        }
-        return null;
+        if(token == null) return null;
+
+        String sessionId = token.replace("Bearer", "").trim();
+        User user = sessionService.getUser(sessionId);
+        if(user == null) return null;
+
+        return new UsernamePasswordAuthenticationToken(user.getEmail(), null, new ArrayList<>());
     }
 }

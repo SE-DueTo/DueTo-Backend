@@ -1,29 +1,21 @@
 package de.dueto.backend.controller.v1;
 
 import de.dueto.backend.model.user.User;
-import de.dueto.backend.security.secret.JwtSecret;
-import de.dueto.backend.service.UserService;
-import io.jsonwebtoken.Jwts;
+import de.dueto.backend.service.SessionService;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AuthorizationMapper {
 
-    private final UserService userService;
-    private final String jwtSecret;
+    private final SessionService sessionService;
 
-    public AuthorizationMapper(UserService userService, JwtSecret jwtSecret) {
-        this.userService = userService;
-        this.jwtSecret = jwtSecret.getJtwSecret();
+    public AuthorizationMapper(SessionService sessionService) {
+        this.sessionService = sessionService;
     }
 
     public User getUser(String token) {
-        String username = Jwts.parser().setSigningKey(jwtSecret.getBytes())
-                .parseClaimsJws(token.replace("Bearer",""))
-                .getBody()
-                .getSubject();
-
-        return userService.findByUsername(username);
+        token = token.replace("Bearer","").trim();
+        return sessionService.getUser(token);
     }
 
 }

@@ -1,10 +1,10 @@
 package de.dueto.backend.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.dueto.backend.model.Session;
 import de.dueto.backend.model.user.SimpleUserDTO;
-import de.dueto.backend.security.secret.JwtSecret;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import de.dueto.backend.service.SessionService;
+import de.dueto.backend.service.UserService;
 import org.hibernate.annotations.Filter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 @Filter(name = "AuthenticationFilter")
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -31,11 +30,13 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
 
-    private final String jwtSecret;
+    private final UserService userService;
+    private final SessionService sessionService;
 
-    public AuthenticationFilter(AuthenticationManager authenticationManager, JwtSecret jwtSecret) {
+    public AuthenticationFilter(AuthenticationManager authenticationManager, SessionService sessionService, UserService userService) {
         this.authenticationManager = authenticationManager;
-        this.jwtSecret = jwtSecret.getJtwSecret();
+        this.userService = userService;
+        this.sessionService = sessionService;
         setFilterProcessesUrl("/login");
     }
 
@@ -58,15 +59,20 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain,
-            Authentication authentication) {
+            Authentication authentication) throws IOException {
 
+        String username = ((User) authentication.getPrincipal()).getUsername();
+        de.dueto.backend.model.user.User user = userService.findByUsername(username);
 
+        if(user == null) return;
 
-        String token = Jwts.builder()
-            .setSubject(((User) authentication.getPrincipal()).getUsername())
-            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
-            .signWith(SignatureAlgorithm.HS512, jwtSecret.getBytes())
-            .compact();
-        response.addHeader("Authorization","Bearer " + token);
+        Session session = new Session();
+        session.setUser(user);
+
+        sessionService.save(session);
+
+        String token = "Bearer " + session.getSessionId();
+        response.addHeader("Authorization", token);
+        response.getOutputStream().print(token);
     }
 }
