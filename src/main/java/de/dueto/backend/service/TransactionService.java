@@ -26,7 +26,7 @@ public class TransactionService {
     }
 
     public long getBalance(User user) {
-        return transactionRepository.findAllByUserAmountListContaining(user.getUserId() + "")
+        return transactionRepository.findAllByUserAmountListContaining(userIdRegex(user.getUserId()))
                 .stream()
                 .mapToLong(transaction -> transaction.getUserAmountList().get(user.getUserId()))
                 .sum();
@@ -43,11 +43,11 @@ public class TransactionService {
     public List<Transaction> getTransactions(User user, long groupId) {
         Group group = groupService.getGroupById(groupId);
         if(group == null) return new ArrayList<>();
-        return transactionRepository.findAllByGroupEqualsAndUserAmountListContaining(group, user.getUserId() + "");
+        return transactionRepository.findAllByGroupEqualsAndUserAmountListContaining(group, userIdRegex(user.getUserId()));
     }
 
     public List<Transaction> getTransactions(User user, long from, long limit) {
-        return transactionRepository.findAllByUserAmountListContaining(user.getUserId() + "")
+        return transactionRepository.findAllByUserAmountListContaining(userIdRegex(user.getUserId()))
                 .stream()
                 .skip(from)
                 .limit(limit)
@@ -59,5 +59,9 @@ public class TransactionService {
         if(transaction==null) return false;
         transactionRepository.save(transaction);
         return true;
+    }
+
+    private String userIdRegex(long userId) {
+        return String.format("\"%d\":", userId);
     }
 }
