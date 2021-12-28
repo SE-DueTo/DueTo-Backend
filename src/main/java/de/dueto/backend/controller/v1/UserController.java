@@ -4,16 +4,13 @@ import de.dueto.backend.model.registration.RegistrationResponseDTO;
 import de.dueto.backend.model.user.RegistrationUserDTO;
 import de.dueto.backend.model.user.User;
 import de.dueto.backend.model.user.UserMapper;
-import de.dueto.backend.security.Session;
+import de.dueto.backend.model.Session;
 import de.dueto.backend.security.UserValidator;
+import de.dueto.backend.service.SessionService;
 import de.dueto.backend.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,13 +19,16 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private final UserService userService;
+    private final SessionService sessionService;
+    private final UserValidator userValidator;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, SessionService sessionService, UserValidator userValidator) {
         this.userService = userService;
+        this.sessionService = sessionService;
+        this.userValidator = userValidator;
     }
 
-    @Autowired
-    private UserValidator userValidator;
+
 
     @PostMapping("/register")
     public RegistrationResponseDTO registration(@RequestBody RegistrationUserDTO userDTO, BindingResult bindingResult, BCryptPasswordEncoder passwordEncoder) {
@@ -50,11 +50,14 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-    public boolean logout(HttpSession session) {
+    public boolean logout(HttpSession session, @RequestHeader(value="Authorization") String token) {
         User user = (User) session.getAttribute(Session.USER_TOKEN);
         if(user == null) return false;
 
         session.invalidate();
+
+        String sessionId = token.replace("Bearer", "").trim();
+        sessionService.destroySession(sessionId);
 
         return true;
     }

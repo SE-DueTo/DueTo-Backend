@@ -85,7 +85,7 @@ public class GroupService {
         return true;
     }
 
-    public long getGroupById(long groupId) {
-        return groupRepository.getById(groupId).getGroupId();
+    public Group getGroupById(long groupId) {
+        return groupRepository.getById(groupId);
     }
 }

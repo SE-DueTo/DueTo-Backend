@@ -56,18 +56,18 @@ public class GroupController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("normal/add")
+    @PostMapping("normal/add")
     public long addNormalGroup(
             @RequestBody GroupAddNormalDTO groupAddNormalDTO) {
         return groupService.addNormalGroup(groupAddNormalDTO);
     }
 
-    @GetMapping("normal/remove/{groupId}")
+    @PostMapping("normal/remove/{groupId}")
     public boolean removeSpontaneousGroup(@PathVariable long groupId) {
         return groupService.removeNormalGroup(groupId);
     }
 
-    @GetMapping("spontaneous/add")
+    @PostMapping("spontaneous/add")
     public long addSpontaneousGroup(
             @RequestHeader(value="Authorization") String token,
             @RequestBody long userId) {

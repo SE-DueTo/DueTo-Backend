@@ -25,13 +25,18 @@ public class Group implements Serializable {
     private String groupName;
 
     @JsonIgnore
-    @Column(nullable = false)
+    @Column
     private String password;
 
     @Enumerated(EnumType.STRING)
     private GroupType groupType;
 
     @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "dueto_group_user",
+            joinColumns = { @JoinColumn(name = "group_id") },
+            inverseJoinColumns = { @JoinColumn(name = "user_id") }
+    )
     private List<User> users;
 
 }

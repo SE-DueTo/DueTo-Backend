@@ -1,5 +1,7 @@
 package de.dueto.backend.security;
 
+import de.dueto.backend.service.SessionService;
+import de.dueto.backend.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -21,10 +23,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserDetailsService userDetailsService;
+    private final UserService userService;
+    private final SessionService sessionService;
 
-    public WebSecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailsService) {
+    public WebSecurityConfig(
+            BCryptPasswordEncoder bCryptPasswordEncoder,
+            UserDetailsService userDetailsService,
+            UserService userService,
+            SessionService sessionService) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userDetailsService = userDetailsService;
+        this.userService = userService;
+        this.sessionService = sessionService;
     }
 
     @Override
@@ -38,8 +48,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.POST, "/**/register").permitAll()
                     .anyRequest().authenticated()
                 .and()
-                .addFilter(new AuthenticationFilter(authenticationManager()))
-                .addFilter(new AuthorizationFilter(authenticationManager()))
+                .addFilter(new AuthenticationFilter(authenticationManager(), sessionService, userService))
+                .addFilter(new AuthorizationFilter(authenticationManager(), sessionService))
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.NEVER)
                     .maximumSessions(20);

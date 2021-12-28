@@ -33,8 +33,8 @@ public class DashboardController {
     @GetMapping("/transactions")
     public List<TransactionDTO> transactions(
             @RequestHeader(value="Authorization") String token,
-            @RequestBody long from,
-            @RequestBody long limit) {
+            @RequestParam long from,
+            @RequestParam long limit) {
         return dashboardService.getTransactions(authorizationMapper.getUser(token), from, limit)
                 .stream()
                 .map(transactionMapper::fromTransaction)
@@ -44,8 +44,8 @@ public class DashboardController {
     @GetMapping("/debts")
     public List<SettleDebt> debts(
             @RequestHeader(value="Authorization") String token,
-            @RequestBody long from,
-            @RequestBody long limit) {
+            @RequestParam long from,
+            @RequestParam long limit) {
         return dashboardService.getDebts(authorizationMapper.getUser(token), from, limit);
     }
 }
