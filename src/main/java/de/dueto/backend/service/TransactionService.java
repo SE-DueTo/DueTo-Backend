@@ -17,12 +17,10 @@ public class TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final TransactionMapper transactionMapper;
-    private final GroupService groupService;
 
-    public TransactionService(TransactionRepository transactionRepository, TransactionMapper transactionMapper, GroupService groupService) {
+    public TransactionService(TransactionRepository transactionRepository, TransactionMapper transactionMapper) {
         this.transactionRepository = transactionRepository;
         this.transactionMapper = transactionMapper;
-        this.groupService = groupService;
     }
 
     public long getBalance(User user) {
@@ -32,16 +30,15 @@ public class TransactionService {
                 .sum();
     }
 
-    public List<Transaction> getTransactions(User user, long groupId, long from, long limit) {
-        return getTransactions(user, groupId)
+    public List<Transaction> getTransactions(User user, Group group, long from, long limit) {
+        return getTransactions(user, group)
                 .stream()
                 .skip(from)
                 .limit(limit)
                 .collect(Collectors.toList());
     }
 
-    public List<Transaction> getTransactions(User user, long groupId) {
-        Group group = groupService.getGroupById(groupId);
+    public List<Transaction> getTransactions(User user, Group group) {
         if(group == null) return new ArrayList<>();
         return transactionRepository.findAllByGroupEqualsAndUserAmountListContaining(group, userIdRegex(user.getUserId()));
     }

@@ -38,7 +38,8 @@ public class GroupService {
     }
 
     public long getBalance(User user, long groupId) {
-        List<Transaction> transactions = getTransactions(user, groupId);
+        Group group = getGroupById(groupId);
+        List<Transaction> transactions = transactionService.getTransactions(user, group);
         List<SettleDebt> debts = getDebts(user, groupId);
 
         long transactionBalance = transactions
@@ -56,14 +57,6 @@ public class GroupService {
 
     public List<SettleDebt> getDebts(User user, long groupId) {
         return settleDebtService.getDebts(user, groupId);
-    }
-
-    public List<Transaction> getTransactions(User user, long groupId) {
-        return transactionService.getTransactions(user, groupId);
-    }
-
-    public List<Transaction> getTransactions(User user, long groupId, long from, long limit) {
-        return transactionService.getTransactions(user, groupId, from, limit);
     }
 
     public long addNormalGroup(GroupAddNormalDTO groupAddNormalDTO) {

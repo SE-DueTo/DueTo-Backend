@@ -28,8 +28,16 @@ public class SettleDebtService {
                 .sum();
     }
 
-    public List<SettleDebt> getTransactions(User user, long from, long limit) {
+    public List<SettleDebt> getDebts(User user, long from, long limit) {
         return settleDebtRepository.getAllByDebtorEquals(user)
+                .stream()
+                .skip(from)
+                .limit(limit)
+                .collect(Collectors.toList());
+    }
+
+    public List<SettleDebt> getDebts(User user, long groupId, long from, long limit) {
+        return getDebts(user, groupId)
                 .stream()
                 .skip(from)
                 .limit(limit)
