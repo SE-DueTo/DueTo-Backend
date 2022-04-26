@@ -1,0 +1,643 @@
+{
+	"info": {
+		"_postman_id": "111cd182-5d93-4eff-a354-a097129e741e",
+		"name": "SE-Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register-1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"register\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.successful).to.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{username1}}\",\r\n    \"password\": \"{{password1}}\",\r\n    \"email\": \"{{email1}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api-endpoint}}/v1/user/register",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"v1",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register-False",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"register\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.successful).to.eql(false);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{username1}}\",\r\n    \"password\": \"{{password1}}\",\r\n    \"email\": \"{{email1}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api-endpoint}}/v1/user/register",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"v1",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register-2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"register 2\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.successful).to.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{username2}}\",\r\n    \"password\": \"{{password2}}\",\r\n    \"email\": \"{{email2}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api-endpoint}}/v1/user/register",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"v1",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login-1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Body is correct\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.expect(pm.response.text().startsWith(\"Bearer\")).to.be.eql(true);\r",
+							"    pm.globals.set(\"jwttoken\", pm.response.text());\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{username1}}\",\r\n    \"password\": \"{{password1}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api-endpoint}}/login",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login-False",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"403 Result\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Body is correct\", function () {\r",
+							"    pm.expect(pm.response.text().startsWith(\"Bearer\")).to.be.eql(false);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"notexists\",\r\n    \"password\": \"notexists\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api-endpoint}}/login",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dashboard Data - NoLogin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"login is required\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api-endpoint}}/v1/dashboard/",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"v1",
+						"dashboard",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dashboard Data - Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var username = pm.variables.get(\"username1\")\r",
+							"var email = pm.variables.get(\"email1\")\r",
+							"\r",
+							"\r",
+							"pm.test(\"shows data\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"    var jsonData = pm.response.json()\r",
+							"    pm.expect(jsonData.user.userId).to.eql(1);\r",
+							"    pm.expect(jsonData.user.username).to.eql(username);\r",
+							"    pm.expect(jsonData.user.email).to.eql(email);\r",
+							"    pm.expect(jsonData.user.avatarUrl).to.eql(null);\r",
+							"    pm.expect(jsonData.groups).to.eql([]);\r",
+							"    pm.expect(jsonData.balance).to.eql(0);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api-endpoint}}/v1/dashboard/",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"v1",
+						"dashboard",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Group - NoLogin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"login is required\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{uid2}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api-endpoint}}/v1/group/spontaneous/add",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"v1",
+						"group",
+						"spontaneous",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Group - Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"shows data\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.expect(pm.response.text().match(/[0123456789]+/)).to.be.not.null\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{uid2}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api-endpoint}}/v1/group/spontaneous/add",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"v1",
+						"group",
+						"spontaneous",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Transaction - NoLogin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"login is required\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"amount\": 10,\r\n  \"date\": \"2021-12-14T16:16:09.682Z\",\r\n  \"groupId\": {{groupid}},\r\n  \"paymentMethod\": \"CASH\",\r\n  \"purpose\": \"This is a test\",\r\n  \"userAmountList\": {\r\n    \"{{uid1}}\": 5,\r\n    \"{{uid2}}\": 5\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api-endpoint}}/v1/transaction/add",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"v1",
+						"transaction",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Transaction - Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"shows data\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.expect(pm.response.text()).to.be.eql(\"true\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"amount\": 10,\r\n  \"date\": \"2021-12-14T16:16:09.682Z\",\r\n  \"groupId\": {{groupid}},\r\n  \"paymentMethod\": \"CASH\",\r\n  \"purpose\": \"This is a test\",\r\n  \"userAmountList\": {\r\n    \"{{uid1}}\": 5,\r\n    \"{{uid2}}\": 5\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api-endpoint}}/v1/transaction/add",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"v1",
+						"transaction",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Transactions - NoLogin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"login is required\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api-endpoint}}/v1/dashboard/transactions?from=0&limit=1",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"v1",
+						"dashboard",
+						"transactions"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Transactions - Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"shows data\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api-endpoint}}/v1/dashboard/transactions?from=0&limit=1",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"v1",
+						"dashboard",
+						"transactions"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{jwttoken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api-endpoint",
+			"value": "localhost:8080"
+		},
+		{
+			"key": "uid1",
+			"value": "1"
+		},
+		{
+			"key": "username1",
+			"value": "testUsername1"
+		},
+		{
+			"key": "password1",
+			"value": "12345678"
+		},
+		{
+			"key": "email1",
+			"value": "test@test.de"
+		},
+		{
+			"key": "uid2",
+			"value": "2"
+		},
+		{
+			"key": "username2",
+			"value": "testUsername1"
+		},
+		{
+			"key": "password2",
+			"value": "123456789"
+		},
+		{
+			"key": "email2",
+			"value": "test2@test.de"
+		},
+		{
+			"key": "groupid",
+			"value": "3"
+		}
+	]
+}
