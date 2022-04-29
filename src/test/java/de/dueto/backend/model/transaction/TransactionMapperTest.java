@@ -4,12 +4,14 @@ import de.dueto.backend.model.group.Group;
 import de.dueto.backend.mysql_data.GroupRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class TransactionMapperTest {
 
     @Autowired
@@ -57,14 +59,6 @@ class TransactionMapperTest {
         });
 
         assertTrue(true);
-    }
-
-    @Test
-    void fromTransactionAddDTO() {
-
-        TransactionAddDTO transactionAddDTO = new TransactionAddDTO(0, 23, "trip", "paypal", date, userAmountList, null);
-
-        assertEquals(transaction, transactionMapper.fromTransactionAddDTO(transactionAddDTO));
 
     }
 

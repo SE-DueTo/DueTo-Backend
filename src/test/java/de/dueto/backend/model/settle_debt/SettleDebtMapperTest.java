@@ -20,7 +20,7 @@ class SettleDebtMapperTest {
 
     SettleDebtMapper settleDebtMapper;
 
-    private List<Group> groups = new ArrayList<>();
+    List<Group> groups = new ArrayList<>();
     Group group =  new Group();
     Date date = new Date();
     User debtor = new User(5,"max","test1@email.de","1234pass",null, groups);
@@ -39,8 +39,8 @@ class SettleDebtMapperTest {
     @Test
     void fromSettleDebt() {
 
-        SettleDebt settleDebt =  new SettleDebt(5,2000,group,debtor,5,creditor,27,"paypal",date);
-        SettleDebtDTO settleDebtDTO = new SettleDebtDTO(5,0,2000,debtor,5,creditor,27,"paypal", date);
+        SettleDebt settleDebt =  new SettleDebt(5, 2000, group, debtor, 5, creditor, 27, "paypal", date);
+        SettleDebtDTO settleDebtDTO = new SettleDebtDTO(5, 0, 2000, debtor, 5, creditor,27, "paypal", date);
 
         assertEquals(settleDebtDTO, settleDebtMapper1.fromSettleDebt(settleDebt));
     }
@@ -55,16 +55,6 @@ class SettleDebtMapperTest {
         });
 
         assertTrue(true);
-    }
-
-    @Test
-    void fromSettleDebtAddDTO() {
-
-        SettleDebt settleDebt =  new SettleDebt(5,2000,group,debtor,5,creditor,27,"paypal",date);
-        SettleDebtAddDTO addDTO = new SettleDebtAddDTO(0, 2000,debtor, 5, creditor, 27, "paypal", date);
-
-        assertEquals(settleDebt, settleDebtMapper1.fromSettleDebtAddDTO(addDTO));
-
     }
 
 }
