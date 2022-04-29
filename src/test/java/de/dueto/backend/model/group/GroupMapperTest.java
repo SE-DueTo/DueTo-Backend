@@ -18,7 +18,6 @@ class GroupMapperTest {
 
     Group group1 = new Group(0, "Normal", "1234pass", GroupType.NORMAL, userList);
 
-    //Group group2 = new Group(0, "Spont", "123456", GroupType.SPONTANEOUS, userList);
     GroupMapper groupMapper = new GroupMapper(userRepository);
 
     @Test
