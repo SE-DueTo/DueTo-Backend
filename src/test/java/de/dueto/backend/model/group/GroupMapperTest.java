@@ -20,6 +20,8 @@ class GroupMapperTest {
     @Autowired
     GroupMapper groupMapper = new GroupMapper(userRepository);
 
+    GroupMapper groupMapper1;
+
     List<Long> users= new ArrayList<>();
     List<User> userList = new ArrayList<>();
 
@@ -40,7 +42,7 @@ class GroupMapperTest {
         User user1 = new User(0,"max","test1@email.de","1234pass",null, null);
 
         assertThrows(NullPointerException.class, ()->{
-            groupMapper.fromGroupAddSpontaneous(user1,0);
+            groupMapper1.fromGroupAddSpontaneous(user1,0);
         });
 
         assertTrue(true);
