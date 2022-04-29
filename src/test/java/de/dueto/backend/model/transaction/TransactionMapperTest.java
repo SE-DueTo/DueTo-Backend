@@ -12,14 +12,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TransactionMapperTest {
 
+    @Autowired
     GroupRepository groupRepository;
 
     @Autowired
     TransactionMapper transactionMapper = new TransactionMapper(groupRepository);
+
     TransactionMapper transactionMapper1;
 
     Group group = new Group();
-
     Date date = new Date();
     HashMap<Long, Long> userAmountList;
     Transaction transaction = new Transaction(10, group, 23, "trip", "paypal", date, userAmountList, null);

@@ -26,6 +26,24 @@ class SettleDebtMapperTest {
     User debtor = new User(5,"max","test1@email.de","1234pass",null, groups);
     User creditor = new User(29,"maxxi","test2@email.de","123456",null, groups);
 
+    @Test
+    void fromSettleDebtNullPointerException() {
+
+        SettleDebt settleDebt =  new SettleDebt();
+
+        assertThrows(NullPointerException.class, ()->{
+            settleDebtMapper.fromSettleDebt(settleDebt);
+        });
+    }
+
+    @Test
+    void fromSettleDebt() {
+
+        SettleDebt settleDebt =  new SettleDebt(5,2000,group,debtor,5,creditor,27,"paypal",date);
+        SettleDebtDTO settleDebtDTO = new SettleDebtDTO(5,0,2000,debtor,5,creditor,27,"paypal", date);
+
+        assertEquals(settleDebtDTO, settleDebtMapper1.fromSettleDebt(settleDebt));
+    }
 
     @Test
     void fromSettleDebtAddDTONullPointerException() {
@@ -49,22 +67,4 @@ class SettleDebtMapperTest {
 
     }
 
-    @Test
-    void fromSettleDebtNullPointerException() {
-
-        SettleDebt settleDebt =  new SettleDebt();
-
-        assertThrows(NullPointerException.class, ()->{
-            settleDebtMapper.fromSettleDebt(settleDebt);
-        });
-    }
-
-    @Test
-    void fromSettleDebt() {
-
-        SettleDebt settleDebt =  new SettleDebt(5,2000,group,debtor,5,creditor,27,"paypal",date);
-        SettleDebtDTO settleDebtDTO = new SettleDebtDTO(5,0,2000,debtor,5,creditor,27,"paypal", date);
-
-        assertEquals(settleDebtDTO, settleDebtMapper1.fromSettleDebt(settleDebt));
-    }
 }
