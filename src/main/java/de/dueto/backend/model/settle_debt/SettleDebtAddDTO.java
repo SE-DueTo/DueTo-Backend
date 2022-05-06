@@ -1,6 +1,5 @@
 package de.dueto.backend.model.settle_debt;
 
-import de.dueto.backend.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,11 +17,7 @@ public class SettleDebtAddDTO {
 
     private long amount;
 
-    private User debtor;
-
     private long debtorId;
-
-    private User creditor;
 
     private long creditorId;
 
