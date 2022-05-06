@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TransactionService {
@@ -24,7 +23,7 @@ public class TransactionService {
     }
 
     public long getBalance(User user) {
-        return transactionRepository.findAllByUserAmountListContaining(userIdRegex(user.getUserId()))
+        return transactionRepository.findAllByUserAmountListContaining(escapeUserId(user.getUserId()))
                 .stream()
                 .mapToLong(transaction -> transaction.getUserAmountList().get(user.getUserId()))
                 .sum();
@@ -35,20 +34,20 @@ public class TransactionService {
                 .stream()
                 .skip(from)
                 .limit(limit)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<Transaction> getTransactions(User user, Group group) {
         if(group == null) return new ArrayList<>();
-        return transactionRepository.findAllByGroupEqualsAndUserAmountListContaining(group, userIdRegex(user.getUserId()));
+        return transactionRepository.findAllByGroupEqualsAndUserAmountListContaining(escapeUserId(user.getUserId()), group.getGroupId());
     }
 
     public List<Transaction> getTransactions(User user, long from, long limit) {
-        return transactionRepository.findAllByUserAmountListContaining(userIdRegex(user.getUserId()))
+        return transactionRepository.findAllByUserAmountListContaining(escapeUserId(user.getUserId()))
                 .stream()
                 .skip(from)
                 .limit(limit)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public boolean addTransaction(TransactionAddDTO transactionAddDTO) {
@@ -58,7 +57,7 @@ public class TransactionService {
         return true;
     }
 
-    private String userIdRegex(long userId) {
-        return String.format("\"%d\":", userId);
+    private String escapeUserId(long userId) {
+        return String.format("$.\"%d\"", userId);
     }
 }
