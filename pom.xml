@@ -14,7 +14,7 @@
 	<name>DueTo-Backend</name>
 	<description>DueTo Backend</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
 	<dependencies>
@@ -126,6 +126,14 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${maven.compiler.target}</target>
+				</configuration>
 			</plugin>
 		</plugins>
 		<finalName>spring-boot-docker</finalName>
