@@ -1,5 +1,6 @@
 package de.dueto.backend.model.group;
 
+import de.dueto.backend.DatabaseTest;
 import de.dueto.backend.model.user.User;
 import de.dueto.backend.mysql_data.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class GroupMapperTest {
+class GroupMapperTest extends DatabaseTest {
 
     @Autowired
     UserRepository userRepository;
