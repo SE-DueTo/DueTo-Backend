@@ -11,18 +11,16 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class UserMapperTest extends DatabaseTest {
+class UserMapperTest {
 
     private List<Group> groups = new ArrayList<>();
     User user = new User(0,"max","test@email.de","1234pass",null, groups);
-
-    UserMapper userMapper;
 
     @Test
     void fromRegistrationUserDTO() {
 
         RegistrationUserDTO registrationUserDTO = new RegistrationUserDTO("max","1234pass", "test@email.de");
 
-        assertEquals(user, userMapper.fromRegistrationUserDTO(registrationUserDTO));
+        assertEquals(user, UserMapper.fromRegistrationUserDTO(registrationUserDTO));
     }
 }

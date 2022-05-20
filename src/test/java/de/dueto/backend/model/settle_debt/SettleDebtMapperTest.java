@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class SettleDebtMapperTest extends DatabaseTest {
+class SettleDebtMapperTest {
 
     @Autowired
     SettleDebtMapper settleDebtMapper1;
