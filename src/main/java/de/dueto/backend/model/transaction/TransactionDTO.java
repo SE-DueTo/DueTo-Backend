@@ -1,5 +1,6 @@
 package de.dueto.backend.model.transaction;
 
+import de.dueto.backend.model.group.Group;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,7 @@ public class TransactionDTO {
 
     private long transactionId;
 
-    private long groupId;
+    private Group group;
 
     private long amount;
 
