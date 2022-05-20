@@ -40,7 +40,7 @@ public class TransactionMapper {
                 .transactionId(transaction.getTransactionId())
                 .amount(transaction.getAmount())
                 .date(transaction.getDate())
-                .groupId(transaction.getGroup().getGroupId())
+                .group(transaction.getGroup())
                 .paymentMethod(transaction.getPaymentMethod())
                 .purpose(transaction.getPurpose())
                 .repeatingInterval(transaction.getRepeatingInterval())
