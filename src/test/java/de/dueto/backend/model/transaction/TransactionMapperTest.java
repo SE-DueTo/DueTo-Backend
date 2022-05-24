@@ -33,9 +33,9 @@ class TransactionMapperTest extends DatabaseTest {
 
         Transaction transaction = new Transaction();
 
-        assertThrows(NullPointerException.class, ()->{
-            transactionMapper1.fromTransaction(transaction);
-        });
+        assertThrows(NullPointerException.class, ()->
+            transactionMapper1.fromTransaction(transaction)
+        );
 
         assertTrue(true);
 
@@ -44,7 +44,7 @@ class TransactionMapperTest extends DatabaseTest {
     @Test
     void fromTransaction() {
 
-        TransactionDTO transactionDTO = new TransactionDTO(10, 0, 23, "trip", "paypal", date, userAmountList, null);
+        TransactionDTO transactionDTO = new TransactionDTO(10, group, 23, "trip", "paypal", date, userAmountList, null);
 
         assertEquals(transactionDTO, transactionMapper.fromTransaction(transaction));
 
@@ -55,9 +55,9 @@ class TransactionMapperTest extends DatabaseTest {
 
         TransactionAddDTO transactionAddDTO = new TransactionAddDTO();
 
-        assertThrows(NullPointerException.class, ()->{
-            transactionMapper1.fromTransactionAddDTO(transactionAddDTO);
-        });
+        assertThrows(NullPointerException.class, ()->
+            transactionMapper1.fromTransactionAddDTO(transactionAddDTO)
+        );
 
         assertTrue(true);
 
