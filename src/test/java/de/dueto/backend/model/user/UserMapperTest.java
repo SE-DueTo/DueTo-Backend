@@ -11,7 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class UserMapperTest {
+class UserMapperTest extends DatabaseTest {
 
     private List<Group> groups = new ArrayList<>();
     User user = new User(0,"max","test@email.de","1234pass",null, groups);
