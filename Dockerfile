@@ -1,9 +1,19 @@
-FROM openjdk:11-jre
+###########
+# builder #
+###########
+FROM maven:3.8.5-openjdk-17 AS builder
 
-EXPOSE 8080
+WORKDIR /dueto-builder
+COPY . .
+RUN mvn -DskipTests package
 
-#add the jar file
-ADD target/spring-boot-docker.jar spring-boot-docker.jar
+###########
+#  main   #
+###########
+FROM openjdk:17-jdk
+
+WORKDIR /dueto
+COPY --from=builder /dueto-builder/target/**.jar ./
 
 # specify command to run the jar
-ENTRYPOINT ["java","-jar","/spring-boot-docker.jar"]
+CMD ["java","-jar","/dueto/spring-boot-docker.jar"]
