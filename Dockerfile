@@ -5,7 +5,7 @@ FROM maven:3.8.5-openjdk-17 AS builder
 
 WORKDIR /dueto-builder
 COPY . .
-RUN mvn -DskipTests package
+RUN mvn -DskipTests package -P prod
 
 ###########
 #  main   #
