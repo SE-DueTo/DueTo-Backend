@@ -1,6 +1,6 @@
 package de.dueto.backend.service;
 
-import de.dueto.backend.DatabaseMock;
+import de.dueto.backend.DatabaseMockUtils;
 import de.dueto.backend.model.group.Group;
 import de.dueto.backend.model.user.User;
 import de.dueto.backend.mysql_data.UserRepository;
@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class UserServiceTest extends DatabaseMock {
+class UserServiceTest extends DatabaseMockUtils {
 
     @Autowired
     UserRepository userRepository;

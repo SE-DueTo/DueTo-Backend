@@ -9,7 +9,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
 @DirtiesContext
-public class DatabaseMock {
+public class DatabaseMockUtils {
 
     @Container
     @SuppressWarnings("rawtypes")

@@ -1,6 +1,6 @@
 package de.dueto.backend.model.settle_debt;
 
-import de.dueto.backend.DatabaseMock;
+import de.dueto.backend.DatabaseMockUtils;
 import de.dueto.backend.model.group.Group;
 import de.dueto.backend.model.user.User;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class SettleDebtMapperTest extends DatabaseMock {
+class SettleDebtMapperTest extends DatabaseMockUtils {
 
     @Autowired
     SettleDebtMapper settleDebtMapper1;
