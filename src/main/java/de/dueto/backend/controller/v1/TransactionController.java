@@ -10,18 +10,20 @@ import org.springframework.web.bind.annotation.*;
 public class TransactionController {
 
     private final TransactionService transactionService;
-    private final AuthorizationMapper authorizationMapper;
+    private final ControllerUtils controllerUtils;
 
-    public TransactionController(TransactionService transactionService, AuthorizationMapper authorizationMapper) {
+    public TransactionController(
+            TransactionService transactionService,
+            ControllerUtils controllerUtils) {
         this.transactionService = transactionService;
-        this.authorizationMapper = authorizationMapper;
+        this.controllerUtils = controllerUtils;
     }
 
     @PostMapping("add")
     public boolean addTransaction(
             @RequestHeader(value="Authorization") String token,
             @RequestBody TransactionAddDTO transactionAddDTO) {
-        User user = authorizationMapper.getUser(token);
+        User user = controllerUtils.checkUser(token);
         if(user.getGroups()
                 .stream()
                 .mapToLong(Group::getGroupId)

@@ -6,6 +6,8 @@ import de.dueto.backend.model.transaction.TransactionAddDTO;
 import de.dueto.backend.model.transaction.TransactionMapper;
 import de.dueto.backend.model.user.User;
 import de.dueto.backend.mysql_data.TransactionRepository;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,14 +24,15 @@ public class TransactionService {
         this.transactionMapper = transactionMapper;
     }
 
-    public long getBalance(User user) {
+    public long getBalance(@NonNull User user) {
         return transactionRepository.findAllByUserAmountListContaining(escapeUserId(user.getUserId()))
                 .stream()
                 .mapToLong(transaction -> transaction.getUserAmountList().get(user.getUserId()))
                 .sum();
     }
 
-    public List<Transaction> getTransactions(User user, Group group, long from, long limit) {
+    @NonNull
+    public List<Transaction> getTransactions(@NonNull User user, @NonNull Group group, long from, long limit) {
         return getTransactions(user, group)
                 .stream()
                 .skip(from)
@@ -37,12 +40,14 @@ public class TransactionService {
                 .toList();
     }
 
-    public List<Transaction> getTransactions(User user, Group group) {
+    @NonNull
+    public List<Transaction> getTransactions(@NonNull User user, @Nullable Group group) {
         if(group == null) return new ArrayList<>();
         return transactionRepository.findAllByGroupEqualsAndUserAmountListContaining(escapeUserId(user.getUserId()), group.getGroupId());
     }
 
-    public List<Transaction> getTransactions(User user, long from, long limit) {
+    @NonNull
+    public List<Transaction> getTransactions(@NonNull User user, long from, long limit) {
         return transactionRepository.findAllByUserAmountListContaining(escapeUserId(user.getUserId()))
                 .stream()
                 .skip(from)
@@ -50,7 +55,7 @@ public class TransactionService {
                 .toList();
     }
 
-    public boolean addTransaction(TransactionAddDTO transactionAddDTO) {
+    public boolean addTransaction(@NonNull TransactionAddDTO transactionAddDTO) {
         Transaction transaction = transactionMapper.fromTransactionAddDTO(transactionAddDTO);
         if(transaction==null) return false;
         transactionRepository.save(transaction);

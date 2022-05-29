@@ -4,6 +4,8 @@ import com.fasterxml.uuid.Generators;
 import de.dueto.backend.model.Session;
 import de.dueto.backend.model.user.User;
 import de.dueto.backend.mysql_data.DuetoSessionRepository;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,12 +19,13 @@ public class SessionService {
         this.sessionRepository = sessionRepository;
     }
 
+    @Nullable
     public User getUser(String sessionId) {
         Optional<Session> user = sessionRepository.findById(sessionId);
         return user.map(Session::getUser).orElse(null);
     }
 
-    public void save(Session session) {
+    public void save(@NonNull Session session) {
         if(session.getSessionId() == null) {
             String uuid;
             do {
@@ -38,6 +41,7 @@ public class SessionService {
         return Generators.timeBasedGenerator().generate().toString();
     }
 
+    @Nullable
     public Session getSession(String sessionId) {
         return sessionRepository.findById(sessionId).orElse(null);
     }

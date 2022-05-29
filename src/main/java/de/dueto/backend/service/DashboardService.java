@@ -2,6 +2,7 @@ package de.dueto.backend.service;
 
 import de.dueto.backend.model.dashboard.DashboardDataDTO;
 import de.dueto.backend.model.user.User;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,14 +19,14 @@ public class DashboardService {
         this.settleDebtService = settleDebtService;
     }
 
-    public DashboardDataDTO getData(User user) {
+    public DashboardDataDTO getData(@NonNull User user) {
         return DashboardDataDTO.builder()
                 .user(user)
                 .groups(user.getGroups())
                 .balance(getBalance(user))
                 .build();
     }
-    private long getBalance(User user) {
+    private long getBalance(@NonNull User user) {
         return settleDebtService.getBalance(user) - transactionService.getBalance(user);
     }
 }

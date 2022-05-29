@@ -1,6 +1,6 @@
 package de.dueto.backend.model.transaction;
 
-import de.dueto.backend.DatabaseTest;
+import de.dueto.backend.DatabaseMockUtils;
 import de.dueto.backend.model.group.Group;
 import de.dueto.backend.mysql_data.GroupRepository;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class TransactionMapperTest extends DatabaseTest {
+class TransactionMapperTest extends DatabaseMockUtils {
 
     @Autowired
     GroupRepository groupRepository;
@@ -58,8 +58,6 @@ class TransactionMapperTest extends DatabaseTest {
         assertThrows(NullPointerException.class, ()->
             transactionMapper1.fromTransactionAddDTO(transactionAddDTO)
         );
-
-        assertTrue(true);
 
     }
 
