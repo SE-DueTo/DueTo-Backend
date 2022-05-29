@@ -1,6 +1,6 @@
 package de.dueto.backend.model.group;
 
-import de.dueto.backend.DatabaseTest;
+import de.dueto.backend.DatabaseMock;
 import de.dueto.backend.model.user.User;
 import de.dueto.backend.mysql_data.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class GroupMapperTest extends DatabaseTest {
+class GroupMapperTest extends DatabaseMock {
 
     @Autowired
     UserRepository userRepository;
@@ -42,11 +42,9 @@ class GroupMapperTest extends DatabaseTest {
 
         User user1 = new User(0,"max","test1@email.de","1234pass",null, null);
 
-        assertThrows(NullPointerException.class, ()->{
-            groupMapper1.fromGroupAddSpontaneous(user1,0);
-        });
-
-        assertTrue(true);
+        assertThrows(NullPointerException.class, ()->
+            groupMapper1.fromGroupAddSpontaneous(user1,0)
+        );
     }
 
 }

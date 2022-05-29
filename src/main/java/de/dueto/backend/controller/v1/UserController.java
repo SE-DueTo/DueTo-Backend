@@ -37,7 +37,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return RegistrationResponseDTO.builder()
                     .successful(false)
-                    .errorMessage(bindingResult.getAllErrors()) //TODO
+                    .errorMessage(bindingResult.getAllErrors())
                     .build();
         }
 

@@ -22,16 +22,15 @@ import java.util.ArrayList;
 @Filter(name = "AuthenticationFilter")
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+    private final AuthenticationManager authenticationManager;
+    private final UserService userService;
+    private final SessionService sessionService;
+
     static class AuthenticationAttemptException extends AuthenticationException {
         public AuthenticationAttemptException(String msg) {
             super(msg);
         }
     }
-
-    private final AuthenticationManager authenticationManager;
-
-    private final UserService userService;
-    private final SessionService sessionService;
 
     public AuthenticationFilter(AuthenticationManager authenticationManager, SessionService sessionService, UserService userService) {
         this.authenticationManager = authenticationManager;

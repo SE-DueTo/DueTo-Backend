@@ -1,6 +1,6 @@
 package de.dueto.backend.model.settle_debt;
 
-import de.dueto.backend.DatabaseTest;
+import de.dueto.backend.DatabaseMock;
 import de.dueto.backend.model.group.Group;
 import de.dueto.backend.model.user.User;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class SettleDebtMapperTest extends DatabaseTest {
+class SettleDebtMapperTest extends DatabaseMock {
 
     @Autowired
     SettleDebtMapper settleDebtMapper1;
@@ -32,9 +32,9 @@ class SettleDebtMapperTest extends DatabaseTest {
 
         SettleDebt settleDebt =  new SettleDebt();
 
-        assertThrows(NullPointerException.class, ()->{
-            settleDebtMapper.fromSettleDebt(settleDebt);
-        });
+        assertThrows(NullPointerException.class, ()->
+            settleDebtMapper.fromSettleDebt(settleDebt)
+        );
     }
 
     @Test
@@ -51,11 +51,9 @@ class SettleDebtMapperTest extends DatabaseTest {
 
         SettleDebtAddDTO addDTO = new SettleDebtAddDTO();
 
-        assertThrows(NullPointerException.class, ()->{
-            settleDebtMapper.fromSettleDebtAddDTO(addDTO);
-        });
-
-        assertTrue(true);
+        assertThrows(NullPointerException.class, ()->
+            settleDebtMapper.fromSettleDebtAddDTO(addDTO)
+        );
     }
 
 }

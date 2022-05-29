@@ -9,11 +9,11 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
 @DirtiesContext
-public class DatabaseTest {
+public class DatabaseMock {
 
     @Container
     @SuppressWarnings("rawtypes")
-    private static MySQLContainer mySQLContainer = new MySQLContainer("mysql:8.0")
+    private static final MySQLContainer mySQLContainer = new MySQLContainer("mysql:8.0")
             .withDatabaseName("DueTo-Database")
             .withUsername("DueTo")
             .withPassword("password");

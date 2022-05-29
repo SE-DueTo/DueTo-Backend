@@ -13,8 +13,8 @@ public class AuthorizationMapper {
         this.sessionService = sessionService;
     }
 
-    public User getUser(String token) {
-        token = token.replace("Bearer","").trim();
+    public User getUser(String t) {
+        String token = t.replace("Bearer","").trim();
         return sessionService.getUser(token);
     }
 
