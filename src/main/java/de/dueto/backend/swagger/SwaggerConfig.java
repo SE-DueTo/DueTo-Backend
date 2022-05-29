@@ -20,7 +20,7 @@ public class SwaggerConfig {
     public static final ApiInfo DEFAULT_API_INFO = new ApiInfo(
             "DueTo-Backend API", "DueTo-Backend API", "1.0",
             "urn:tos", DEFAULT_CONTACT,
-            "Apache 2.0", "http://www.apache.org/licenses/LICENSE-2.0", List.of());
+            "Apache 2.0", "https://www.apache.org/licenses/LICENSE-2.0", List.of());
 
     private static final Set<String> DEFAULT_PRODUCES_AND_CONSUMES =
             new HashSet<>(Arrays.asList("application/json",

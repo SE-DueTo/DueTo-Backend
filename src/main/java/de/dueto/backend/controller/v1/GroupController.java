@@ -7,13 +7,13 @@ import de.dueto.backend.model.settle_debt.SettleDebtDTO;
 import de.dueto.backend.model.settle_debt.SettleDebtMapper;
 import de.dueto.backend.model.transaction.TransactionDTO;
 import de.dueto.backend.model.transaction.TransactionMapper;
+import de.dueto.backend.model.user.User;
 import de.dueto.backend.service.GroupService;
 import de.dueto.backend.service.SettleDebtService;
 import de.dueto.backend.service.TransactionService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/v1/group")
@@ -22,31 +22,32 @@ public class GroupController {
     private final GroupService groupService;
     private final TransactionService transactionService;
     private final SettleDebtService settleDebtService;
-    private final AuthorizationMapper authorizationMapper;
     private final TransactionMapper transactionMapper;
     private final SettleDebtMapper settleDebtMapper;
+    private final ControllerUtils controllerUtils;
 
 
     public GroupController(
             GroupService groupService,
             TransactionService transactionService,
             SettleDebtService settleDebtService,
-            AuthorizationMapper authorizationMapper,
             TransactionMapper transactionMapper,
-            SettleDebtMapper settleDebtMapper) {
+            SettleDebtMapper settleDebtMapper,
+            ControllerUtils controllerUtils) {
         this.groupService = groupService;
         this.transactionService = transactionService;
-        this.authorizationMapper = authorizationMapper;
         this.settleDebtService = settleDebtService;
         this.transactionMapper = transactionMapper;
         this.settleDebtMapper = settleDebtMapper;
+        this.controllerUtils = controllerUtils;
     }
 
     @GetMapping("{groupId}")
     public GroupAndSumDTO getGroupInfo(
             @RequestHeader(value="Authorization") String token,
             @PathVariable long groupId) {
-        return groupService.getGroupInfo(authorizationMapper.getUser(token), groupId);
+        User user = controllerUtils.checkUser(token);
+        return groupService.getGroupInfo(user, groupId);
     }
 
     @GetMapping("{groupId}/transactions")
@@ -55,11 +56,12 @@ public class GroupController {
             @PathVariable long groupId,
             @RequestBody long from,
             @RequestBody int limit) {
-        Group group = groupService.getGroupById(groupId);
-        return transactionService.getTransactions(authorizationMapper.getUser(token), group, from, limit)
+        User user = controllerUtils.checkUser(token);
+        Group group = controllerUtils.checkGroup(groupId);
+        return transactionService.getTransactions(user, group, from, limit)
                 .stream()
                 .map(transactionMapper::fromTransaction)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @GetMapping("{groupId}/debts")
@@ -68,10 +70,11 @@ public class GroupController {
             @PathVariable long groupId,
             @RequestBody long from,
             @RequestBody int limit) {
-        return settleDebtService.getDebts(authorizationMapper.getUser(token), groupId, from, limit)
+        User user = controllerUtils.checkUser(token);
+        return settleDebtService.getDebts(user, groupId, from, limit)
                 .stream()
                 .map(settleDebtMapper::fromSettleDebt)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @PostMapping("normal/add")
@@ -89,6 +92,7 @@ public class GroupController {
     public long addSpontaneousGroup(
             @RequestHeader(value="Authorization") String token,
             @RequestBody long userId) {
-        return groupService.addSpontaneousGroup(authorizationMapper.getUser(token), userId);
+        User user = controllerUtils.checkUser(token);
+        return groupService.addSpontaneousGroup(user, userId);
     }
 }

@@ -1,8 +1,12 @@
 package de.dueto.backend.model.settle_debt;
 
+import de.dueto.backend.model.group.Group;
+import de.dueto.backend.model.user.User;
 import de.dueto.backend.mysql_data.GroupRepository;
 import de.dueto.backend.mysql_data.UserRepository;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Optional;
 
 @Configuration
 public class SettleDebtMapper {
@@ -16,14 +20,19 @@ public class SettleDebtMapper {
     }
 
     public SettleDebt fromSettleDebtAddDTO(SettleDebtAddDTO settleDebtAddDTO) {
-        if (groupRepository.findById(settleDebtAddDTO.getGroupId()).isEmpty()) {
+        Optional<Group> group = groupRepository.findById(settleDebtAddDTO.getGroupId());
+        Optional<User> creditor = userRepository.findById(settleDebtAddDTO.getCreditorId());
+        Optional<User> debtor = userRepository.findById(settleDebtAddDTO.getDebtorId());
+        if (group.isEmpty() || creditor.isEmpty() || debtor.isEmpty()) {
             return null;
         }
+
+
         return SettleDebt.builder()
-                .group(groupRepository.findById(settleDebtAddDTO.getGroupId()).get())
+                .group(group.get())
                 .amount(settleDebtAddDTO.getAmount())
-                .creditor(userRepository.findById(settleDebtAddDTO.getCreditorId()).get())
-                .debtor(userRepository.findById(settleDebtAddDTO.getDebtorId()).get())
+                .creditor(creditor.get())
+                .debtor(debtor.get())
                 .paymentMethod(settleDebtAddDTO.getPaymentMethod())
                 .date(settleDebtAddDTO.getDate())
                 .build();

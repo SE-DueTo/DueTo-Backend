@@ -4,13 +4,13 @@ import de.dueto.backend.model.settle_debt.SettleDebt;
 import de.dueto.backend.model.dashboard.DashboardDataDTO;
 import de.dueto.backend.model.transaction.TransactionDTO;
 import de.dueto.backend.model.transaction.TransactionMapper;
+import de.dueto.backend.model.user.User;
 import de.dueto.backend.service.DashboardService;
 import de.dueto.backend.service.SettleDebtService;
 import de.dueto.backend.service.TransactionService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/v1/dashboard")
@@ -19,21 +19,27 @@ public class DashboardController {
     private final DashboardService dashboardService;
     private final TransactionService transactionService;
     private final SettleDebtService settleDebtService;
-    private final AuthorizationMapper authorizationMapper;
     private final TransactionMapper transactionMapper;
+    private final ControllerUtils controllerUtils;
 
 
-    public DashboardController(DashboardService dashboardService, TransactionService transactionService, SettleDebtService settleDebtService, AuthorizationMapper authorizationMapper, TransactionMapper transactionMapper) {
+    public DashboardController(
+            DashboardService dashboardService,
+            TransactionService transactionService,
+            SettleDebtService settleDebtService,
+            TransactionMapper transactionMapper,
+            ControllerUtils controllerUtils) {
         this.dashboardService = dashboardService;
         this.transactionService = transactionService;
         this.settleDebtService = settleDebtService;
-        this.authorizationMapper = authorizationMapper;
         this.transactionMapper = transactionMapper;
+        this.controllerUtils = controllerUtils;
     }
 
     @GetMapping("/")
     public DashboardDataDTO getData(@RequestHeader(value="Authorization") String token) {
-        return dashboardService.getData(authorizationMapper.getUser(token));
+        User user = controllerUtils.checkUser(token);
+        return dashboardService.getData(user);
     }
 
     @GetMapping("/transactions")
@@ -41,10 +47,11 @@ public class DashboardController {
             @RequestHeader(value="Authorization") String token,
             @RequestParam long from,
             @RequestParam long limit) {
-        return transactionService.getTransactions(authorizationMapper.getUser(token), from, limit)
+        User user = controllerUtils.checkUser(token);
+        return transactionService.getTransactions(user, from, limit)
                 .stream()
                 .map(transactionMapper::fromTransaction)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @GetMapping("/debts")
@@ -52,6 +59,7 @@ public class DashboardController {
             @RequestHeader(value="Authorization") String token,
             @RequestParam long from,
             @RequestParam long limit) {
-        return settleDebtService.getDebts(authorizationMapper.getUser(token), from, limit);
+        User user = controllerUtils.checkUser(token);
+        return settleDebtService.getDebts(user, from, limit);
     }
 }

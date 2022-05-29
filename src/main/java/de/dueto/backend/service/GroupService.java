@@ -8,6 +8,8 @@ import de.dueto.backend.model.group.GroupAndSumDTO;
 import de.dueto.backend.model.group.GroupMapper;
 import de.dueto.backend.model.user.User;
 import de.dueto.backend.mysql_data.GroupRepository;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,8 +39,9 @@ public class GroupService {
                 .build();
     }
 
-    public long getBalance(User user, long groupId) {
+    public long getBalance(@NonNull User user, long groupId) {
         Group group = getGroupById(groupId);
+        if(group == null) return 0;
         List<Transaction> transactions = transactionService.getTransactions(user, group);
         List<SettleDebt> debts = getDebts(user, groupId);
 
@@ -55,7 +58,7 @@ public class GroupService {
         return debtsBalance - transactionBalance;
     }
 
-    public List<SettleDebt> getDebts(User user, long groupId) {
+    public List<SettleDebt> getDebts(@NonNull User user, long groupId) {
         return settleDebtService.getDebts(user, groupId);
     }
 
@@ -78,7 +81,8 @@ public class GroupService {
         return true;
     }
 
+    @Nullable
     public Group getGroupById(long groupId) {
-        return groupRepository.getById(groupId);
+        return groupRepository.findById(groupId).orElse(null);
     }
 }

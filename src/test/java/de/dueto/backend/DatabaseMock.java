@@ -27,7 +27,7 @@ public class DatabaseMock {
         registry.add("spring.datasource.url",mySQLContainer::getJdbcUrl);
         registry.add("spring.datasource.username", mySQLContainer::getUsername);
         registry.add("spring.datasource.password", mySQLContainer::getPassword);
-        registry.add("sprin.datasource.hikari.connection-timeout", () -> 250);
+        registry.add("spring.datasource.hikari.connection-timeout", () -> 250);
     }
 
 }

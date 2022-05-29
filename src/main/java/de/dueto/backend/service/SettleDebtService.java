@@ -5,10 +5,10 @@ import de.dueto.backend.model.settle_debt.SettleDebtAddDTO;
 import de.dueto.backend.model.settle_debt.SettleDebtMapper;
 import de.dueto.backend.model.user.User;
 import de.dueto.backend.mysql_data.SettleDebtRepository;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class SettleDebtService {
@@ -21,34 +21,37 @@ public class SettleDebtService {
         this.settleDebtMapper = settleDebtMapper;
     }
 
-    public long getBalance(User user) {
+    public long getBalance(@NonNull User user) {
         return settleDebtRepository.getAllByDebtorEquals(user)
                 .stream()
                 .mapToLong(SettleDebt::getAmount)
                 .sum();
     }
 
-    public List<SettleDebt> getDebts(User user, long from, long limit) {
+    @NonNull
+    public List<SettleDebt> getDebts(@NonNull User user, long from, long limit) {
         return settleDebtRepository.getAllByDebtorEquals(user)
                 .stream()
                 .skip(from)
                 .limit(limit)
-                .collect(Collectors.toList());
+                .toList();
     }
 
-    public List<SettleDebt> getDebts(User user, long groupId, long from, long limit) {
+    @NonNull
+    public List<SettleDebt> getDebts(@NonNull User user, long groupId, long from, long limit) {
         return getDebts(user, groupId)
                 .stream()
                 .skip(from)
                 .limit(limit)
-                .collect(Collectors.toList());
+                .toList();
     }
 
-    public List<SettleDebt> getDebts(User user, long groupId) {
+    @NonNull
+    public List<SettleDebt> getDebts(@NonNull User user, long groupId) {
         return settleDebtRepository.getAllByDebtorEqualsAndGroupEquals(user, groupId);
     }
 
-    public boolean addSettleDebt(SettleDebtAddDTO settleDebtAddDTO) {
+    public boolean addSettleDebt(@NonNull SettleDebtAddDTO settleDebtAddDTO) {
         SettleDebt settleDebt = settleDebtMapper.fromSettleDebtAddDTO(settleDebtAddDTO);
         if(settleDebt==null) return false;
         settleDebtRepository.save(settleDebt);
