@@ -29,7 +29,7 @@ class UserServiceTest extends DatabaseMockUtils {
     void findByUsername() {
 
         userService.save(user);
-        assertEquals(user, userService.findByUsername("max"));
+        assertEquals(user, userService.findFirstByUsername("max"));
 
     }
 
