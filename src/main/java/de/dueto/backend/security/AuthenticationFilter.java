@@ -61,7 +61,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
             Authentication authentication) throws IOException {
 
         String username = ((User) authentication.getPrincipal()).getUsername();
-        de.dueto.backend.model.user.User user = userService.findByUsername(username);
+        de.dueto.backend.model.user.User user = userService.findFirstByUsername(username);
 
         if(user == null) return;
 

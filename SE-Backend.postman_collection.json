@@ -566,6 +566,120 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"shows data\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api-endpoint}}/v1/user/{{username1}}?limit=1",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"v1",
+						"user",
+						"{{username1}}"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"shows data\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api-endpoint}}/v1/user/{{username2}}?limit=1",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"v1",
+						"user",
+						"{{username2}}"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"shows data\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api-endpoint}}/v1/user/{{usernameCommon}}?limit=10",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"v1",
+						"user",
+						"{{usernameCommon}}"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {
@@ -625,7 +739,7 @@
 		},
 		{
 			"key": "username2",
-			"value": "testUsername1"
+			"value": "testUsername2"
 		},
 		{
 			"key": "password2",
@@ -638,6 +752,10 @@
 		{
 			"key": "groupid",
 			"value": "3"
+		},
+		{
+			"key": "usernameCommon",
+			"value": "testUsername"
 		}
 	]
 }

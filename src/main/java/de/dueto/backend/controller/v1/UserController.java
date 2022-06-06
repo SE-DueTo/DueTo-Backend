@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @RequestMapping("v1/user/")
@@ -61,4 +62,14 @@ public class UserController {
 
         return true;
     }
+
+
+    @GetMapping("{username}")
+    public List<User> getByUsernameContaining(
+            @PathVariable String username,
+            @RequestParam long limit) {
+        return userService.findByUsernameContaining(username, limit);
+    }
+
+
 }
