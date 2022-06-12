@@ -11,6 +11,7 @@ import de.dueto.backend.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -22,11 +23,13 @@ public class UserController {
     private final UserService userService;
     private final SessionService sessionService;
     private final UserValidator userValidator;
+    private final ControllerUtils controllerUtils;
 
-    public UserController(UserService userService, SessionService sessionService, UserValidator userValidator) {
+    public UserController(UserService userService, SessionService sessionService, UserValidator userValidator, ControllerUtils controllerUtils) {
         this.userService = userService;
         this.sessionService = sessionService;
         this.userValidator = userValidator;
+        this.controllerUtils = controllerUtils;
     }
 
 
@@ -71,5 +74,17 @@ public class UserController {
         return userService.findByUsernameContaining(username, limit);
     }
 
+    @GetMapping("/login/{token}")
+    public boolean verifyUserToken(
+            @PathVariable String token) {
+        try {
+           controllerUtils.checkUser(token);
+        }
+        catch (ResponseStatusException e)
+        {
+            return false;
+        }
+        return true;
+    }
 
 }
