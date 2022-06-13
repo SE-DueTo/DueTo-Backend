@@ -8,6 +8,7 @@ import de.dueto.backend.model.settle_debt.SettleDebtMapper;
 import de.dueto.backend.model.transaction.TransactionDTO;
 import de.dueto.backend.model.transaction.TransactionMapper;
 import de.dueto.backend.model.user.User;
+import de.dueto.backend.model.user.UserIdDTO;
 import de.dueto.backend.service.GroupService;
 import de.dueto.backend.service.SettleDebtService;
 import de.dueto.backend.service.TransactionService;
@@ -91,8 +92,8 @@ public class GroupController {
     @PostMapping("spontaneous/add")
     public long addSpontaneousGroup(
             @RequestHeader(value="Authorization") String token,
-            @RequestBody long userId) {
+            @RequestBody UserIdDTO userIdDTO) {
         User user = controllerUtils.checkUser(token);
-        return groupService.addSpontaneousGroup(user, userId);
+        return groupService.addSpontaneousGroup(user, userIdDTO.getUserId());
     }
 }
