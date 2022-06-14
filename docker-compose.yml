@@ -3,10 +3,9 @@ version: '4.2'
 services:
 
   mysql:
-    image: 'mysql:8.0'
+    image: 'mysql'
     restart: always
     environment:
-      MYSQL_URL : jdbc:mysql://mysql:3306/DueTo-Database?useSSL=false&allowPublicKeyRetrieval=true
       MYSQL_ROOT_PASSWORD : root
       MYSQL_DATABASE : DueTo-Database
       MYSQL_USER : DueTo
@@ -21,10 +20,10 @@ services:
     image : 'backend-app'
     restart : always
     environment:
-      DB_HOST: mysql:3306
-      DB_USER: DueTo
-      DB_PASSWORD: password
-      DB_NAME: DueTo-Database
+      DATABASE_JDBC_URL: jdbc:mysql://mysql:3306/DueTo-Database
+      DATABASE_LOGIN_USERNAME: DueTo
+      DATABASE_LOGIN_PASSWORD: password
+      spring_profiles_active: prod
     ports:
-      - "8000:8080"
+      - "8080:8080"
 
