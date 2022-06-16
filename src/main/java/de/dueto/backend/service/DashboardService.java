@@ -27,6 +27,6 @@ public class DashboardService {
                 .build();
     }
     private long getBalance(@NonNull User user) {
-        return settleDebtService.getBalance(user) - transactionService.getBalance(user);
+        return transactionService.getBalance(user) + settleDebtService.getBalance(user);
     }
 }

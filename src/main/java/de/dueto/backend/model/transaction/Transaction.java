@@ -1,6 +1,7 @@
 package de.dueto.backend.model.transaction;
 
 import de.dueto.backend.model.group.Group;
+import de.dueto.backend.model.user.User;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
@@ -20,6 +21,9 @@ public class Transaction {
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "transaction_id")
     private long transactionId;
+
+    @ManyToOne
+    private User whoPaid;
 
     @ManyToOne
     private Group group;

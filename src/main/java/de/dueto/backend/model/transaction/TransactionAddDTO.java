@@ -14,6 +14,8 @@ import java.util.HashMap;
 @Builder
 public class TransactionAddDTO {
 
+    private long whoPaid;
+
     private long groupId;
 
     private long amount;

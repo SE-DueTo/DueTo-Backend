@@ -1,6 +1,7 @@
 package de.dueto.backend.model.transaction;
 
 import de.dueto.backend.model.group.Group;
+import de.dueto.backend.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,8 @@ import java.util.HashMap;
 public class TransactionDTO {
 
     private long transactionId;
+
+    private User whoPaid;
 
     private Group group;
 
