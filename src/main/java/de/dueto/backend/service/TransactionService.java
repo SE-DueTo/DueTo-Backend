@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TransactionService {
@@ -27,7 +28,21 @@ public class TransactionService {
     public long getBalance(@NonNull User user) {
         return transactionRepository.findAllByUserAmountListContaining(escapeUserId(user.getUserId()))
                 .stream()
-                .mapToLong(transaction -> transaction.getUserAmountList().get(user.getUserId()))
+                .mapToLong(transaction -> {
+                    long whoPaidId = transaction.getWhoPaid().getUserId();
+                    if(whoPaidId == user.getUserId()) {
+                        //transaction was payed by user
+                        // -> money of all the others summed is the balance for this transaction
+                        return transaction.getUserAmountList()
+                                .entrySet()
+                                .stream().filter(entry -> entry.getKey() != whoPaidId)
+                                .mapToLong(Map.Entry::getValue)
+                                .sum();
+                    }
+                    //transaction was payed by someone else
+                    //the amount the user has to pay is the negative balance of the transaction
+                    return -transaction.getUserAmountList().get(user.getUserId());
+                })
                 .sum();
     }
 
