@@ -1,5 +1,6 @@
 package de.dueto.backend.service;
 
+import de.dueto.backend.model.group.Group;
 import de.dueto.backend.model.settle_debt.SettleDebt;
 import de.dueto.backend.model.settle_debt.SettleDebtAddDTO;
 import de.dueto.backend.model.settle_debt.SettleDebtMapper;
@@ -38,8 +39,8 @@ public class SettleDebtService {
     }
 
     @NonNull
-    public List<SettleDebt> getDebts(@NonNull User user, long groupId, long from, long limit) {
-        return getDebts(user, groupId)
+    public List<SettleDebt> getDebts(@NonNull User user, Group group, long from, long limit) {
+        return getDebts(user, group)
                 .stream()
                 .skip(from)
                 .limit(limit)
@@ -47,8 +48,8 @@ public class SettleDebtService {
     }
 
     @NonNull
-    public List<SettleDebt> getDebts(@NonNull User user, long groupId) {
-        return settleDebtRepository.getAllByDebtorEqualsAndGroupEquals(user, groupId);
+    public List<SettleDebt> getDebts(@NonNull User user, Group group) {
+        return settleDebtRepository.getAllByDebtorEqualsAndGroupEquals(user, group);
     }
 
     public boolean addSettleDebt(@NonNull SettleDebtAddDTO settleDebtAddDTO) {

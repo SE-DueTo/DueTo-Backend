@@ -35,15 +35,13 @@ public class GroupService {
         if(group.isEmpty()) return null;
         return GroupAndSumDTO.builder()
                 .group(group.get())
-                .sum(getBalance(user, groupId))
+                .sum(getBalance(user, group.get()))
                 .build();
     }
 
-    public long getBalance(@NonNull User user, long groupId) {
-        Group group = getGroupById(groupId);
-        if(group == null) return 0;
+    public long getBalance(@NonNull User user, Group group) {
         List<Transaction> transactions = transactionService.getTransactions(user, group);
-        List<SettleDebt> debts = getDebts(user, groupId);
+        List<SettleDebt> debts = getDebts(user, group);
 
         long transactionBalance = transactions
                 .stream()
@@ -58,8 +56,8 @@ public class GroupService {
         return debtsBalance - transactionBalance;
     }
 
-    public List<SettleDebt> getDebts(@NonNull User user, long groupId) {
-        return settleDebtService.getDebts(user, groupId);
+    public List<SettleDebt> getDebts(@NonNull User user, Group group) {
+        return settleDebtService.getDebts(user, group);
     }
 
     public long addNormalGroup(GroupAddNormalDTO groupAddNormalDTO) {
