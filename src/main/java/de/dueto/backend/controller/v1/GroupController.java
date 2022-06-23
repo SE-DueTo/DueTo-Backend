@@ -46,7 +46,7 @@ public class GroupController {
     @GetMapping("{groupId}")
     public GroupAndSumDTO getGroupInfo(
             @RequestHeader(value="Authorization") String token,
-            @PathVariable long groupId) {
+            @PathVariable Long groupId) {
         User user = controllerUtils.checkUser(token);
         return groupService.getGroupInfo(user, groupId);
     }
@@ -55,8 +55,8 @@ public class GroupController {
     public List<TransactionDTO> getTransactions(
             @RequestHeader(value="Authorization") String token,
             @PathVariable long groupId,
-            @RequestBody long from,
-            @RequestBody int limit) {
+            @RequestParam long from,
+            @RequestParam int limit) {
         User user = controllerUtils.checkUser(token);
         Group group = controllerUtils.checkGroup(groupId);
         return transactionService.getTransactions(user, group, from, limit)
@@ -69,10 +69,11 @@ public class GroupController {
     public List<SettleDebtDTO> getDebts(
             @RequestHeader(value="Authorization") String token,
             @PathVariable long groupId,
-            @RequestBody long from,
-            @RequestBody int limit) {
+            @RequestParam long from,
+            @RequestParam int limit) {
         User user = controllerUtils.checkUser(token);
-        return settleDebtService.getDebts(user, groupId, from, limit)
+        Group group = controllerUtils.checkGroup(groupId);
+        return settleDebtService.getDebts(user, group, from, limit)
                 .stream()
                 .map(settleDebtMapper::fromSettleDebt)
                 .toList();
